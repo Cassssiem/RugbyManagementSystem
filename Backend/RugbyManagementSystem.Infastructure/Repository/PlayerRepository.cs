@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RugbyManagementSystem.Application.Data;
+using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
-using RugbyManagementSystem.Domain.RepoInterfaces;
-using RugbyManagementSystem.Domain.RepoInterfaces;
+using RugbyManagementSystem.Infastructure.Data;
 
 namespace RugbyManagementSystem.Infastructure.Repository
 {
@@ -16,15 +15,25 @@ namespace RugbyManagementSystem.Infastructure.Repository
 
         public async Task<PlayerDetails> CreatePlayerAsync(PlayerDetails player)
         {
-            await _context.Players.AddAsync(player);
+            var newPlayer = new PlayerDetails
+            {
+                Name = player.Name,
+                Surname = player.Surname,
+                NickName = player.NickName,
+                Position = player.Position,
+                Tries = player.Tries,
+                Conversion = player.Conversion,
+            };
+
+            await _context.Players.AddAsync(newPlayer);
             await _context.SaveChangesAsync();
 
-            return player;
+            return newPlayer;
         }
 
-        public async Task<PlayerDetails> DeletePlayerAsync(int Id)
+        public async Task<PlayerDetails?> DeletePlayerAsync(string name)
         {
-            var player = await _context.Players.FindAsync(Id);
+            var player = await _context.Players.FindAsync(name);
 
             if (player == null)
                 return null;
@@ -35,13 +44,12 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return player;
         }
 
-        public async Task<PlayerDetails> GetPlayerByIdAsync(int id)
+        public async Task<PlayerDetails?> GetPlayerByNameAsync(string name)
         {
-            var player = await _context.Players.FindAsync(id);
-            return player;
+            return await _context.Players.FindAsync(name);
         }
 
-        public async Task<IEnumerable<PlayerDetails>> GetAllAsync()
+        public async Task<List<PlayerDetails>> GetAllAsync()
         {
             return await _context.Players.ToListAsync();
         }
@@ -51,7 +59,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
         public async Task<PlayerDetails?> UpdatePlayerAsync(PlayerDetails updatedPlayer)
         {
             var player = await _context.Players
-                .FirstOrDefaultAsync(p => p.Id == updatedPlayer.Id);
+                .FirstOrDefaultAsync(p => p.Name == updatedPlayer.Name);
 
             if (player == null)
                 return null;
@@ -59,11 +67,16 @@ namespace RugbyManagementSystem.Infastructure.Repository
             player.Name = updatedPlayer.Name;
             player.Surname = updatedPlayer.Surname;
             player.Age = updatedPlayer.Age;
+            player.NickName = updatedPlayer.NickName;
             player.Position = updatedPlayer.Position;
+            player.Tries = updatedPlayer.Tries;
+            player.Conversion = updatedPlayer.Conversion;
 
             await _context.SaveChangesAsync();
 
             return player;
         }
+
+
     }
 }

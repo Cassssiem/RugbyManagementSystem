@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RugbyManagementSystem.Application\RugbyManagementSystem.Application.csproj" />
     <ProjectReference Include="..\RugbyManagementSystem.Domain\RugbyManagementSystem.Domain.csproj" />
   </ItemGroup>
 

@@ -8,8 +8,10 @@ namespace RugbyManagementSystem.Application.DTOs.MatchDTOs
     {
         public int Id { get; set; }
         public string Opponent { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string Score { get; set; }
         public string Location { get; set; }
+        public string PlayerWhoScored { get; set; }
+        public string PlayerWhoConverted { get; set; }
     }
 }

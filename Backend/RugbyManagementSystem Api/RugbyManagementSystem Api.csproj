@@ -24,4 +24,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RugbyManagementSystem.Application\RugbyManagementSystem.Application.csproj" />
+    <ProjectReference Include="..\RugbyManagementSystem.Infastructure\RugbyManagementSystem.Infastructure.csproj" />
+  </ItemGroup>
+
 </Project>

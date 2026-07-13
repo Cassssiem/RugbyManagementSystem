@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DrCEFNkhZhw=",
+  "dgSpecHash": "raB3qaFoC34=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\First 6m\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Infastructure\\RugbyManagementSystem.Infastructure.csproj",
+  "projectFilePath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Infastructure\\RugbyManagementSystem.Infastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Cassiem\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\Cassiem\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

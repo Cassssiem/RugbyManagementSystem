@@ -8,9 +8,9 @@ namespace RugbyManagementSystem.Application.Interfaces
 {
     public interface IMatchServices
     {
-        Task<IEnumerable<MatchDetails>> GetAllAsync();
+        Task<List<MatchDetails>> GetAllAsync();
         Task<MatchDetails?> GetMatchByIdAsync(int Id);
         Task<MatchDetails> CreateMatchAsync(MatchDetails Match);
-        Task<MatchDetails?> UpdateMatchAsync(MatchDetails match );
+        Task<MatchDetails?> UpdateMatchAsync(int  Id );
     }
 }
