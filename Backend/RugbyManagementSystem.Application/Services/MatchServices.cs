@@ -1,4 +1,5 @@
 ﻿using Microsoft.Identity.Client.Utils;
+using RugbyManagementSystem.Application.DTOs.MatchDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
 using System;
@@ -25,9 +26,9 @@ namespace RugbyManagementSystem.Application.Services
                 Opponent = Match.Opponent,
                 Date = Match.Date,
                 Location = Match.Location,
-                Score = Match.Score,
-                PlayerWhoScored = Match.PlayerWhoScored,
-                PlayerWhoConverted = Match.PlayerWhoConverted,
+
+                Titans = Match.Titans,
+                OpponentScore = Match.OpponentScore,
             };
 
             await _matchRepository.CreateMatchAsync(newmatchDetails);
@@ -52,14 +53,14 @@ namespace RugbyManagementSystem.Application.Services
             if (match == null)
                 return null;
 
-            {
-                match.Opponent = dto.Opponent,
-                match.Date = dto.Date,
-                match.Location = dto.Location,
-                match.Score = dto.Score,
-                match.PlayerWhoScored = dto.PlayerWhoScored,
-                match.PlayerWhoConverted = dto.PlayerWhoConverted,
-            }
+
+            match.Opponent = dto.Opponent;
+            match.Date = dto.Date;
+                match.Location = dto.Location;
+
+            match.Titans = dto.Titans;
+            match.OpponentScore = dto.OpponentScore;
+            
 
 
             return match;

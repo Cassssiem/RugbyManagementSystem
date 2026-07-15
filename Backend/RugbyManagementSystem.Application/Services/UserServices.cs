@@ -1,4 +1,5 @@
-﻿using RugbyManagementSystem.Application.DTOs.UserDTOs;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using RugbyManagementSystem.Application.DTOs.UserDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
 
@@ -16,7 +17,7 @@ namespace RugbyManagementSystem.Application.Services
         {
             var newUser = new UserDetails
             {
-                Id = User.Id,
+
                 Username = User.Username,
                 Password = User.Password,
                 Role = User.Role,
@@ -31,7 +32,7 @@ namespace RugbyManagementSystem.Application.Services
             return await _userRepository.GetAllUsersAsync();
         }
 
-        public async Task<UserDetails?> GetUserByIdAsync(int Id)
+        public async Task<UserDetails?> GetUserByIdAsync(Guid Id)
         {
             var User = await _userRepository.GetUserByIdAsync(Id);
             return User;
@@ -50,6 +51,18 @@ namespace RugbyManagementSystem.Application.Services
 
                 return user;
             }
+        }
+
+        public async Task<UserDetails?> DeleteUserAsync(Guid Id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(Id);
+
+            if (user == null)
+                return null;
+
+            await _userRepository.DeleteUserAsync(Id);
+
+            return user;
         }
     }
 }

@@ -15,6 +15,8 @@ namespace RugbyManagementSystem.Domain.Entities
 
             public int Tries { get; set; }
             public int Conversions { get; set; }
+
+
         
     }
 }

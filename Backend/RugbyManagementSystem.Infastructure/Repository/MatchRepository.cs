@@ -20,10 +20,10 @@ namespace RugbyManagementSystem.Infastructure.Repository
             {
                 Opponent = Match.Opponent,
                 Date = DateTime.Now,
-                Score = Match.Score,
+
                 Location = Match.Location,
-                PlayerWhoScored = Match.PlayerWhoScored,
-                PlayerWhoConverted = Match.PlayerWhoConverted,
+                Titans = Match.Titans,
+                OpponentScore = Match.OpponentScore,
 
             };
 
@@ -52,10 +52,10 @@ namespace RugbyManagementSystem.Infastructure.Repository
                 return null;
 
             match.Opponent = updatedMatch.Opponent;
-            match.Score = updatedMatch.Score;
+
             match.Location = updatedMatch.Location;
-            match.PlayerWhoScored = updatedMatch.PlayerWhoScored;
-            match.PlayerWhoConverted = updatedMatch.PlayerWhoConverted;
+            match.Titans = updatedMatch.Titans;
+            match.OpponentScore = updatedMatch.OpponentScore;
 
             await _context.SaveChangesAsync();
             return match;

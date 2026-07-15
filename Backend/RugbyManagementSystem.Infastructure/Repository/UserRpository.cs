@@ -33,7 +33,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<UserDetails?> GetUserByIdAsync(int Id)
+        public async Task<UserDetails?> GetUserByIdAsync(Guid Id)
         {
             return await _context.Users.FindAsync(Id);
         }
@@ -49,6 +49,19 @@ namespace RugbyManagementSystem.Infastructure.Repository
             user.Username = updateUserDTOs.Username;
             user.Password = updateUserDTOs.Password;
 
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<UserDetails?> DeleteUserAsync(Guid Id)
+        {
+            var user = await _context.Users.FindAsync(Id);
+
+            if (user == null)
+                return null;
+
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return user;

@@ -9,8 +9,9 @@ namespace RugbyManagementSystem.Application.Interfaces
     public interface IUserRepository
     {
         Task<IEnumerable<UserDetails>> GetAllUsersAsync();
-        Task<UserDetails?> GetUserByIdAsync(int Id);
+        Task<UserDetails?> GetUserByIdAsync(Guid Id);
         Task<UserDetails> CreateUserAsync(UserDetails user);
         Task<UserDetails?> UpdateUserAsync(UserDetails user);
+        Task<UserDetails?> DeleteUserAsync(Guid Id);
     }
 }

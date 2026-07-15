@@ -13,6 +13,5 @@ namespace RugbyManagementSystem.Domain.Entities
         public int Tries { get; set; }
         public int Conversion { get; set; }
 
-        public ICollection<MatchPlayer> MatchPlayers { get; set; } = new List<MatchPlayer>();
     }
 }

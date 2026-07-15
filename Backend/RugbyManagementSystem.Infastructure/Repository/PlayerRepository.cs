@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
+using RugbyManagementSystem.Application.DTOs.PlayerDTOs;
+using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
 using RugbyManagementSystem.Infastructure.Data;
@@ -13,27 +16,24 @@ namespace RugbyManagementSystem.Infastructure.Repository
             _context = context;
         }
 
-        public async Task<PlayerDetails> CreatePlayerAsync(PlayerDetails player)
+        public async Task<PlayerDetails?> GetPlayerByIdAsync(Guid Id)
         {
-            var newPlayer = new PlayerDetails
-            {
-                Name = player.Name,
-                Surname = player.Surname,
-                NickName = player.NickName,
-                Position = player.Position,
-                Tries = player.Tries,
-                Conversion = player.Conversion,
-            };
-
-            await _context.Players.AddAsync(newPlayer);
-            await _context.SaveChangesAsync();
-
-            return newPlayer;
+            return await _context.Players
+                .FirstOrDefaultAsync(p => p.Id == Id);
         }
 
-        public async Task<PlayerDetails?> DeletePlayerAsync(string name)
+        public async Task<PlayerDetails> CreatePlayerAsync(PlayerDetails player)
         {
-            var player = await _context.Players.FindAsync(name);
+            await _context.Players.AddAsync(player);
+
+            await _context.SaveChangesAsync();
+
+            return player;
+        }
+        public async Task<PlayerDetails?> DeletePlayerAsync(Guid playerId)
+        {
+            var player = await _context.Players
+                .FirstOrDefaultAsync(p => p.Id == playerId);
 
             if (player == null)
                 return null;
@@ -44,10 +44,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return player;
         }
 
-        public async Task<PlayerDetails?> GetPlayerByNameAsync(string name)
-        {
-            return await _context.Players.FindAsync(name);
-        }
+
 
         public async Task<List<PlayerDetails>> GetAllAsync()
         {
@@ -56,21 +53,9 @@ namespace RugbyManagementSystem.Infastructure.Repository
 
 
 
-        public async Task<PlayerDetails?> UpdatePlayerAsync(PlayerDetails updatedPlayer)
+        public async Task<PlayerDetails> UpdatePlayerAsync(PlayerDetails player)
         {
-            var player = await _context.Players
-                .FirstOrDefaultAsync(p => p.Name == updatedPlayer.Name);
-
-            if (player == null)
-                return null;
-
-            player.Name = updatedPlayer.Name;
-            player.Surname = updatedPlayer.Surname;
-            player.Age = updatedPlayer.Age;
-            player.NickName = updatedPlayer.NickName;
-            player.Position = updatedPlayer.Position;
-            player.Tries = updatedPlayer.Tries;
-            player.Conversion = updatedPlayer.Conversion;
+            _context.Players.Update(player);
 
             await _context.SaveChangesAsync();
 

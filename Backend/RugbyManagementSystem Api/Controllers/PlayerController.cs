@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
+using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
 using System.Numerics;
@@ -16,17 +18,12 @@ namespace RugbyManagementSystem_Api.Controllers
             _playerService = playerServices;
         }
 
-        [HttpPost("Addad a player")]
-        public async Task<ActionResult<PlayerDetails>> CreatePlayerAsync(PlayerDetails player)
-        { 
+        [HttpPost]
+        public async Task<ActionResult<CreatePlayerDTOs>> CreatePlayer(CreatePlayerDTOs player)
+        {
             var newPlayer = await _playerService.CreatePlayerAsync(player);
 
-            return CreatedAtAction(
-                nameof(GetPlayerById),
-                new { Id = newPlayer.Id },
-                newPlayer
-                );
-
+            return Ok(newPlayer);
         }
 
         [HttpGet]
@@ -38,10 +35,10 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
 
-        [HttpGet("{name}")]
-        public async Task<ActionResult<PlayerDetails>> GetPlayerById(string name)
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<PlayerDetails>> GetPlayerById(Guid playerId)
         {
-            var player = await _playerService.GetPlayerByIdAsync(name);
+            var player = await _playerService.GetPlayerByIdAsync(playerId);
 
             if (player == null)
                 return NotFound();
@@ -50,9 +47,9 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPut("Update a players Details")]
-        public async Task<ActionResult<PlayerDetails>> UpdatePLayerAsync(string name, PlayerDetails player)
+        public async Task<ActionResult<UpdatePlayerDTOs>> UpdatePLayerAsync(Guid playerId, UpdatePlayerDTOs player)
         {
-            if (name != player.Name)
+            if (playerId != player.Id)
                 return BadRequest("Player does not exist");
 
             var updateplayer =await _playerService.UpdatePlayerAsync(player);
@@ -64,10 +61,10 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpDelete("Delete a player")]
-        public async Task<ActionResult> DeletePLayerAsunc(string name, PlayerDetails player)
+        public async Task<ActionResult> DeletePLayerAsunc(Guid playerId)
         {
 
-            var result = await _playerService.DeletePlayerAsync(name);
+            var result = await _playerService.DeletePlayerAsync(playerId);
 
             if (result == null)
                 return NotFound("Player was not found");

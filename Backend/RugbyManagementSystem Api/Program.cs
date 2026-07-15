@@ -14,7 +14,12 @@ namespace RugbyManagementSystem_Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Controllers
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+     .AddJsonOptions(options =>
+     {
+         options.JsonSerializerOptions.ReferenceHandler =
+             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+     });
 
             // Swagger
             builder.Services.AddEndpointsApiExplorer();
@@ -27,10 +32,15 @@ namespace RugbyManagementSystem_Api
                 ));
 
             // Application Services
+            // Services
             builder.Services.AddScoped<IPlayerServices, PlayerServices>();
+            builder.Services.AddScoped<IMatchServices, MatchServices>();
+            builder.Services.AddScoped<IMatchPlayerServices, MatchPlayerService>();
 
             // Repositories
             builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+            builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+            builder.Services.AddScoped<IMatchPlayerRepository, MatchPlayerRepository>();
 
             var app = builder.Build();
 

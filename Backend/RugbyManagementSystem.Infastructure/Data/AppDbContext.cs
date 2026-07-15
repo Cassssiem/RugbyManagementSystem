@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
+using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,37 +16,43 @@ namespace RugbyManagementSystem.Infastructure.Data
         public DbSet<PlayerDetails> Players { get; set; }
         public DbSet<MatchDetails> Matches { get; set; }
         public DbSet<UserDetails> Users { get; set; }
+        public DbSet<MatchPlayer> MatchPlayers { get; set; }
+        public DbSet<CreatePlayerDTOs> CreatePlayerDTOs { get; set; }
+        public DbSet<UpdatePlayerDTOs> UpdatePlayers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Player table configuration
-            modelBuilder.Entity<PlayerDetails>()
-                .HasKey(p => p.Id);
 
-            // Match table configuration
-            modelBuilder.Entity<MatchDetails>()
-                .HasKey(m => m.Id);
-
-            // MatchPlayer composite key
+            // MatchPlayer Composite Primary Key
             modelBuilder.Entity<MatchPlayer>()
                 .HasKey(mp => new { mp.PlayerId, mp.MatchId });
 
 
-            // MatchPlayer -> PlayerDetails
+            // Player -> MatchPlayer relationship
             modelBuilder.Entity<MatchPlayer>()
-                .HasOne(mp => mp.Player)
-                .WithMany(p => p.MatchPlayers)
-                .HasForeignKey(mp => mp.PlayerId);
+                .HasOne(mp => mp.Player);
 
 
-            // MatchPlayer -> MatchDetails
+
+
+            // Match -> MatchPlayer relationship
             modelBuilder.Entity<MatchPlayer>()
-                .HasOne(mp => mp.Match)
-                .WithMany(m => m.MatchPlayers)
-                .HasForeignKey(mp => mp.MatchId);
+                .HasOne(mp => mp.Match);
 
+  
+   
+
+
+            // Player configuration
+            modelBuilder.Entity<PlayerDetails>()
+                .HasKey(p => p.Id);
+
+
+            // Match configuration
+            modelBuilder.Entity<MatchDetails>()
+                .HasKey(m => m.Id);
         }
     }
 }
