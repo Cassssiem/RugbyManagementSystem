@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RugbyManagementSystem.Application.DTOs.MatchDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Application.Services;
 using RugbyManagementSystem.Domain.Entities;
@@ -18,20 +19,15 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MatchDetails>> CreateMatchAsync(MatchDetails matchDetails)
+        public async Task<ActionResult<CreateMatchDTOs>> CreateMatchAsync(CreateMatchDTOs matchDetails)
         {
             var newMatch = await _matchServices.CreateMatchAsync(matchDetails);
 
-            return CreatedAtAction
-                (
-                    nameof(GetMatchById),
-                    new { Id = newMatch.Id },
-                    newMatch
-                );
+            return Ok(newMatch);
         }
 
         [HttpGet]
-        public async Task<ActionResult<MatchDetails>> GetAllAsync()
+        public async Task<ActionResult<CreateMatchDTOs>> GetAllAsync()
         {
             var match = await _matchServices.GetAllAsync();
 
@@ -39,7 +35,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult<MatchDetails>> GetMatchById(int Id)
+        public async Task<ActionResult<CreateMatchDTOs>> GetMatchById(int Id)
         {
             var match = await _matchServices.GetMatchByIdAsync(Id);
 
@@ -50,17 +46,14 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<MatchDetails>> UpdateMatchAsync(int matchId, MatchDetails match)
+        public async Task<ActionResult<CreateMatchDTOs>> UpdateMatch(UpdateMatchDTOs dto)
         {
-            if (matchId != match.Id)
-                return BadRequest("User does not exist");
+            var match = await _matchServices.UpdateMatchAsync(dto);
 
-            var updatematch = await _matchServices.UpdateMatchAsync(match);
+            if (match == null)
+                return NotFound();
 
-            if (updatematch == null)
-                return NotFound(nameof(match));
-
-            return Ok(updatematch);
+            return Ok(match);
         }
 
 

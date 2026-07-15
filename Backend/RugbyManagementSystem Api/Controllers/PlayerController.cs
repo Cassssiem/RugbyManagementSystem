@@ -27,7 +27,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PlayerDetails>>> GetAllPlayers()
+        public async Task<ActionResult<IEnumerable<CreatePlayerDTOs>>> GetAllPlayers()
         {
             var player = await _playerService.GetAllPlayersAsync();
 
@@ -36,7 +36,7 @@ namespace RugbyManagementSystem_Api.Controllers
 
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult<PlayerDetails>> GetPlayerById(Guid playerId)
+        public async Task<ActionResult<CreatePlayerDTOs>> GetPlayerById(Guid playerId)
         {
             var player = await _playerService.GetPlayerByIdAsync(playerId);
 

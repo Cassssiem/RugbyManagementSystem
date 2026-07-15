@@ -19,20 +19,27 @@ namespace RugbyManagementSystem.Application.Services
             _matchRepository = matchRepository;
         }
 
-        public async Task<MatchDetails> CreateMatchAsync(MatchDetails Match)
+        public async Task<CreateMatchDTOs> CreateMatchAsync(CreateMatchDTOs match)
         {
-            var newmatchDetails = new MatchDetails
+            var newMatchDetails = new MatchDetails
             {
-                Opponent = Match.Opponent,
-                Date = Match.Date,
-                Location = Match.Location,
-
-                Titans = Match.Titans,
-                OpponentScore = Match.OpponentScore,
+                Opponent = match.Opponent,
+                Date = match.Date,
+                Location = match.Location,
+                Titans = match.Titans,
+                OpponentScore = match.OpponentScore
             };
 
-            await _matchRepository.CreateMatchAsync(newmatchDetails);
-            return newmatchDetails;
+            var createdMatch = await _matchRepository.CreateMatchAsync(newMatchDetails);
+
+            return new CreateMatchDTOs
+            {
+                Opponent = createdMatch.Opponent,
+                Date = createdMatch.Date,
+                Location = createdMatch.Location,
+                Titans = createdMatch.Titans,
+                OpponentScore = createdMatch.OpponentScore
+            };
         }
 
         public async Task<IEnumerable<MatchDetails>> GetAllAsync()
@@ -46,7 +53,7 @@ namespace RugbyManagementSystem.Application.Services
             return match;
         }
 
-        public async Task<MatchDetails?> UpdateMatchAsync(MatchDetails dto)
+        public async Task<UpdateMatchDTOs?> UpdateMatchAsync(UpdateMatchDTOs dto)
         {
             var match = await _matchRepository.GetMatchByIdAsync(dto.Id);
 
@@ -56,14 +63,23 @@ namespace RugbyManagementSystem.Application.Services
 
             match.Opponent = dto.Opponent;
             match.Date = dto.Date;
-                match.Location = dto.Location;
-
+            match.Location = dto.Location;
             match.Titans = dto.Titans;
             match.OpponentScore = dto.OpponentScore;
-            
 
 
-            return match;
+            var updatedMatch = await _matchRepository.UpdateMatchAsync(match);
+
+
+            return new UpdateMatchDTOs
+            {
+                Id = updatedMatch.Id,
+                Opponent = updatedMatch.Opponent,
+                Date = updatedMatch.Date,
+                Location = updatedMatch.Location,
+                Titans = updatedMatch.Titans,
+                OpponentScore = updatedMatch.OpponentScore
+            };
         }
     }
 }

@@ -45,10 +45,6 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Score")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Titans")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,7 +75,7 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.ToTable("MatchPlayers");
                 });
 
-            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.PlayerDetailsDTOs", b =>
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.PlayerDetails", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,11 +113,9 @@ namespace RugbyManagementSystem.Infastructure.Migrations
 
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.UserDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -143,13 +137,13 @@ namespace RugbyManagementSystem.Infastructure.Migrations
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.MatchPlayer", b =>
                 {
                     b.HasOne("RugbyManagementSystem.Domain.Entities.MatchDetails", "Match")
-                        .WithMany()
+                        .WithMany("MatchPlayers")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RugbyManagementSystem.Domain.Entities.PlayerDetailsDTOs", "Player")
-                        .WithMany()
+                    b.HasOne("RugbyManagementSystem.Domain.Entities.PlayerDetails", "Player")
+                        .WithMany("MatchPlayers")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -157,6 +151,16 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.Navigation("Match");
 
                     b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.MatchDetails", b =>
+                {
+                    b.Navigation("MatchPlayers");
+                });
+
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.PlayerDetails", b =>
+                {
+                    b.Navigation("MatchPlayers");
                 });
 #pragma warning restore 612, 618
         }

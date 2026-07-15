@@ -11,8 +11,8 @@ namespace RugbyManagementSystem.Application.Interfaces
     {
         Task<IEnumerable<MatchDetails>> GetAllAsync();
         Task<MatchDetails?> GetMatchByIdAsync(int Id);
-        Task<MatchDetails> CreateMatchAsync(MatchDetails Match);
-        Task<MatchDetails?> UpdateMatchAsync(MatchDetails dto );
+        Task<CreateMatchDTOs> CreateMatchAsync(CreateMatchDTOs Match);
+        Task<UpdateMatchDTOs?> UpdateMatchAsync(UpdateMatchDTOs dto );
 
     }
 }

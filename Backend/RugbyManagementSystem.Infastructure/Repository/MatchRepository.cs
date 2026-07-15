@@ -14,23 +14,13 @@ namespace RugbyManagementSystem.Infastructure.Repository
             _context = context;
         }
 
-        public async Task<MatchDetails> CreateMatchAsync(MatchDetails Match)
+        public async Task<MatchDetails> CreateMatchAsync(MatchDetails match)
         {
-            var newmatch = new MatchDetails
-            {
-                Opponent = Match.Opponent,
-                Date = DateTime.Now,
+            await _context.Matches.AddAsync(match);
 
-                Location = Match.Location,
-                Titans = Match.Titans,
-                OpponentScore = Match.OpponentScore,
-
-            };
-
-            await _context.Matches.AddAsync(newmatch);
             await _context.SaveChangesAsync();
 
-            return newmatch;
+            return match;
         }
 
         public async Task<List<MatchDetails>> GetAllAsync()
@@ -43,21 +33,12 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return await _context.Matches.FindAsync(Id);
         }
 
-        public async Task<MatchDetails?> UpdateMatchAsync(MatchDetails updatedMatch)
+        public async Task<MatchDetails> UpdateMatchAsync(MatchDetails match)
         {
-            var match = await _context.Matches.FirstOrDefaultAsync(
-                p => p.Id == updatedMatch.Id);
-
-            if (match == null)
-                return null;
-
-            match.Opponent = updatedMatch.Opponent;
-
-            match.Location = updatedMatch.Location;
-            match.Titans = updatedMatch.Titans;
-            match.OpponentScore = updatedMatch.OpponentScore;
+            _context.Matches.Update(match);
 
             await _context.SaveChangesAsync();
+
             return match;
         }
     }

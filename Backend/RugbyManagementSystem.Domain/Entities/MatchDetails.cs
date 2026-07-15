@@ -14,6 +14,6 @@ namespace RugbyManagementSystem.Domain.Entities
         public string OpponentScore  {get; set; }
 
 
-
+        public ICollection<MatchPlayer> MatchPlayers { get; set; }
     }
 }

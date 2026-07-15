@@ -17,42 +17,34 @@ namespace RugbyManagementSystem.Infastructure.Data
         public DbSet<MatchDetails> Matches { get; set; }
         public DbSet<UserDetails> Users { get; set; }
         public DbSet<MatchPlayer> MatchPlayers { get; set; }
-        public DbSet<CreatePlayerDTOs> CreatePlayerDTOs { get; set; }
-        public DbSet<UpdatePlayerDTOs> UpdatePlayers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-
-            // MatchPlayer Composite Primary Key
+            // Composite Primary Key for MatchPlayer
             modelBuilder.Entity<MatchPlayer>()
                 .HasKey(mp => new { mp.PlayerId, mp.MatchId });
 
-
-            // Player -> MatchPlayer relationship
-            modelBuilder.Entity<MatchPlayer>()
-                .HasOne(mp => mp.Player);
-
-
-
-
-            // Match -> MatchPlayer relationship
-            modelBuilder.Entity<MatchPlayer>()
-                .HasOne(mp => mp.Match);
-
-  
-   
-
-
-            // Player configuration
-            modelBuilder.Entity<PlayerDetails>()
+            modelBuilder.Entity<MatchDetails>()
                 .HasKey(p => p.Id);
 
 
-            // Match configuration
-            modelBuilder.Entity<MatchDetails>()
-                .HasKey(m => m.Id);
+            // Player -> MatchPlayer
+            modelBuilder.Entity<MatchPlayer>()
+                .HasOne(mp => mp.Player)
+                .WithMany(p => p.MatchPlayers)
+                .HasForeignKey(mp => mp.PlayerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            // Match -> MatchPlayer
+            modelBuilder.Entity<MatchPlayer>()
+                .HasOne(mp => mp.Match)
+                .WithMany(m => m.MatchPlayers)
+                .HasForeignKey(mp => mp.MatchId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

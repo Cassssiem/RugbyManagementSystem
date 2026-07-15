@@ -12,7 +12,7 @@ using RugbyManagementSystem.Infastructure.Data;
 namespace RugbyManagementSystem.Infastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260714095917_InitialCreate")]
+    [Migration("20260715093556_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,15 +44,11 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlayerWhoConverted")
+                    b.Property<string>("OpponentScore")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlayerWhoScored")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Score")
+                    b.Property<string>("Titans")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -120,11 +116,9 @@ namespace RugbyManagementSystem.Infastructure.Migrations
 
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.UserDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Password")
                         .IsRequired()

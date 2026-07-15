@@ -19,10 +19,9 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Opponent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Score = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlayerWhoScored = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlayerWhoConverted = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Titans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OpponentScore = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,8 +50,7 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
