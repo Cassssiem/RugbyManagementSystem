@@ -8,7 +8,7 @@ namespace RugbyManagementSystem.Application.Interfaces
 {
     public interface IMatchPlayerRepository
     {
-        Task<MatchPlayer?> GetAsync(Guid playerId, int matchId);
+        Task<MatchPlayer?> GetPlayerMatchAsync(Guid playerId, int matchId);
 
         Task<MatchPlayer> AddAsync(MatchPlayer matchPlayer);
 

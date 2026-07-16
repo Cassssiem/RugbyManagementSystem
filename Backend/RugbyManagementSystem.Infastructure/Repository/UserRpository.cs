@@ -16,16 +16,12 @@ namespace RugbyManagementSystem.Infastructure.Repository
 
         public async Task<UserDetails> CreateUserAsync(UserDetails user)
         {
-            var newUser = new UserDetails
-            {
-                Username = user.Username,
-                Password = user.Password
-            };
+            await _context.AddAsync(user);
 
-            await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
-            return newUser;
+            return user;
+
         }
 
         public async Task<IEnumerable<UserDetails>> GetAllUsersAsync()
@@ -38,16 +34,9 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return await _context.Users.FindAsync(Id);
         }
 
-        public async Task<UserDetails?> UpdateUserAsync(UserDetails updateUserDTOs)
+        public async Task<UserDetails?> UpdateUserAsync(UserDetails user)
         {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(p => p.Id == updateUserDTOs.Id);
-
-            if (user == null)
-                return null;
-
-            user.Username = updateUserDTOs.Username;
-            user.Password = updateUserDTOs.Password;
+            _context.Users.Update(user);
 
             await _context.SaveChangesAsync();
 

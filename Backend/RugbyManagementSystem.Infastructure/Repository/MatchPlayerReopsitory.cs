@@ -14,15 +14,16 @@ namespace RugbyManagementSystem.Infastructure.Repository
             _context = context;
         }
 
-        public async Task<MatchPlayer?> GetAsync(Guid playerId, int matchId)
-        {
+        public async Task<MatchPlayer?> GetPlayerMatchAsync(Guid playerId, int matchId)
+    {
             return await _context.MatchPlayers
-                .Include(mp => mp.Player)
-                .Include(mp => mp.Match)
-                .FirstOrDefaultAsync(mp =>
-                    mp.PlayerId == playerId &&
-                    mp.MatchId == matchId);
+        .Include(mp => mp.Player)
+        .Include(mp => mp.Match)
+        .FirstOrDefaultAsync(mp =>
+            mp.PlayerId == playerId &&
+            mp.MatchId == matchId);
         }
+
 
         public async Task<MatchPlayer> AddAsync(MatchPlayer matchPlayer)
         {

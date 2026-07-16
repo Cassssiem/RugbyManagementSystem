@@ -34,7 +34,7 @@ namespace RugbyManagementSystem.Application.Services
             if (match == null)
                 throw new Exception("Match not found.");
 
-            var existing = await _matchPlayerRepository.GetAsync(playerId, matchId);
+            var existing = await _matchPlayerRepository.GetPlayerMatchAsync(playerId, matchId);
 
             if (existing != null)
                 throw new Exception("Player is already assigned to this match.");
@@ -52,20 +52,16 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<MatchPlayer> UpdatePlayerMatchStatsAsync(UpdateMatchPlayerDto dto)
         {
-            var matchPlayer = await _matchPlayerRepository.GetAsync(dto.PlayerId, dto.MatchId);
+            var matchPlayer = await _matchPlayerRepository
+                .GetPlayerMatchAsync(dto.PlayerId, dto.MatchId);
 
             if (matchPlayer == null)
-            {
-                matchPlayer = new MatchPlayer
-                {
-                    PlayerId = dto.PlayerId,
-                    MatchId = dto.MatchId,
-                    Tries = dto.Tries,
-                    Conversions = dto.Conversions
-                };
+                throw new KeyNotFoundException(
+                    "Player is not assigned to this match.");
 
-                return await _matchPlayerRepository.AddAsync(matchPlayer);
-            }
+            if (dto.Tries < 0 || dto.Conversions < 0)
+                throw new ArgumentException(
+                    "Tries and conversions cannot be negative.");
 
             matchPlayer.Tries = dto.Tries;
             matchPlayer.Conversions = dto.Conversions;
@@ -85,7 +81,7 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<bool> RemovePlayerFromMatchAsync(Guid playerId, int matchId)
         {
-            var matchPlayer = await _matchPlayerRepository.GetAsync(playerId, matchId);
+            var matchPlayer = await _matchPlayerRepository.GetPlayerMatchAsync(playerId, matchId);
 
             if (matchPlayer == null)
                 return false;
