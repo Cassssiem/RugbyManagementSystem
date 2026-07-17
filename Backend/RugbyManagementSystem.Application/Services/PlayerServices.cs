@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.PlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
@@ -18,6 +19,11 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<CreatePlayerDTOs> CreatePlayerAsync(CreatePlayerDTOs player)
         {
+
+            if (player == null)
+                throw new ArgumentException(nameof(player));
+
+
             var newPlayer = new PlayerDetails
             {
                 Name = player.Name,
@@ -25,6 +31,7 @@ namespace RugbyManagementSystem.Application.Services
                 Surname = player.Surname,
                 NickName = player.NickName,
                 Position = player.Position,
+                MatchesPlayed = player.MatchesPlayed,
                 Tries = player.Tries,
                 Conversion = player.Conversion
             };
@@ -38,6 +45,8 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<PlayerDetails?> GetPlayerByIdAsync(Guid playerId)
         {
+            if (playerId == Guid.Empty)
+                throw new ArgumentException("Please enter a Valid Id");
             var player = await _playerRepository.GetPlayerByIdAsync(playerId);
             return player;
         }
@@ -45,6 +54,9 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<UpdatePlayerDTOs?> UpdatePlayerAsync(UpdatePlayerDTOs dto)
         {
+            if (dto.Id == Guid.Empty)
+                throw new ArgumentException("Please enter a Valid Id");
+
             var player = await _playerRepository.GetPlayerByIdAsync(dto.Id);
 
             if (player == null)
@@ -55,6 +67,7 @@ namespace RugbyManagementSystem.Application.Services
             player.Surname = dto.Surname;
             player.NickName = dto.NickName;
             player.Position = dto.Position;
+            player.MatchesPlayed = dto.MatchesPlayed;
             player.Tries = dto.Tries;
             player.Conversion = dto.Conversion;
 
@@ -68,6 +81,7 @@ namespace RugbyManagementSystem.Application.Services
                 Surname = player.Surname,
                 NickName = player.NickName,
                 Position = player.Position,
+                MatchesPlayed = player.MatchesPlayed,
                 Tries = player.Tries,
                 Conversion = player.Conversion
             };
@@ -80,6 +94,9 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<DeletePlayerDTO?> DeletePlayerAsync(Guid playerId)
         {
+            if (playerId == Guid.Empty)
+                throw new ArgumentException("Please enter a Valid Id");
+
             var player = await _playerRepository.GetPlayerByIdAsync(playerId);
 
             if (player == null)

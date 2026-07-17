@@ -10,8 +10,8 @@ namespace RugbyManagementSystem.Domain.Entities
         public string Opponent { get; set; }
         public DateTime Date { get; set; }
         public string Location { get; set; }
-        public string Titans { get; set; }
-        public string OpponentScore  {get; set; }
+        public int Titans { get; set; }
+        public int OpponentScore  {get; set; }
 
 
         public ICollection<MatchPlayer> MatchPlayers { get; set; }

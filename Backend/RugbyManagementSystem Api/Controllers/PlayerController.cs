@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Application.Interfaces;
@@ -19,6 +20,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CreatePlayerDTOs>> CreatePlayer(CreatePlayerDTOs player)
         {
             var newPlayer = await _playerService.CreatePlayerAsync(player);
@@ -35,7 +37,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
 
-        [HttpGet("{Id}")]
+        [HttpGet("{playerId}")]
         public async Task<ActionResult<CreatePlayerDTOs>> GetPlayerById(Guid playerId)
         {
             var player = await _playerService.GetPlayerByIdAsync(playerId);
@@ -47,6 +49,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPut("Update a players Details")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UpdatePlayerDTOs>> UpdatePLayerAsync(Guid playerId, UpdatePlayerDTOs player)
         {
             if (playerId != player.Id)
@@ -61,6 +64,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpDelete("Delete a player")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeletePLayerAsunc(Guid playerId)
         {
 

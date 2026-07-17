@@ -71,11 +71,18 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<List<MatchPlayer>> GetPlayersByMatchAsync(int matchId)
         {
+            if (matchId < 0)
+                throw new ArgumentOutOfRangeException("Please enter a valid match Id");
+
+
             return await _matchPlayerRepository.GetPlayersByMatchAsync(matchId);
         }
 
         public async Task<List<MatchPlayer>> GetMatchesByPlayerAsync(Guid playerId)
         {
+            if (playerId == Guid.Empty)
+                throw new NullReferenceException("Please enter a valid Id");
+
             return await _matchPlayerRepository.GetMatchesByPlayerAsync(playerId);
         }
 

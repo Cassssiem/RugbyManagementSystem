@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using RugbyManagementSystem.Application.DTOs.UserDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
+using System.Numerics;
 
 namespace RugbyManagementSystem.Application.Services
 {
@@ -15,11 +17,17 @@ namespace RugbyManagementSystem.Application.Services
 
         public async Task<UserDetails> CreateUserAsync(CreateUserDTOs User)
         {
+
+            if (string.IsNullOrWhiteSpace(User.Username))
+                throw new ArgumentException("Please enter a player name.");
+
+            if (string.IsNullOrWhiteSpace(User.Password))
+                throw new ArgumentException("Please enter a password");
+
             var newUser = new UserDetails
             {
-
                 Username = User.Username,
-                Password = User.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(User.Password),
                 Role = User.Role,
             };
             await _userRepository.CreateUserAsync(newUser);
@@ -27,20 +35,26 @@ namespace RugbyManagementSystem.Application.Services
 
         }
 
-        public async Task<IEnumerable<UserDetails>> GetAllUsersAsync()
+        public async Task<List<GetUserDTOs>> GetAllUsersAsync()
         {
             return await _userRepository.GetAllUsersAsync();
         }
 
-        public async Task<UserDetails?> GetUserByIdAsync(Guid Id)
+        public async Task<GetUserDTOs?> GetUserByIdAsync(Guid Id)
         {
+            if (Id == Guid.Empty)
+                throw new ArgumentException("Please enter a vaild Id");
+
             var User = await _userRepository.GetUserByIdAsync(Id);
             return User;
         }
 
         public async Task<UserDetails?> UpdateUserAsync(UserDetails Id)
         {
-            {
+
+            if (Id == null)
+                throw new ArgumentException("Please enter a valid Id");
+            
                 var user = await _userRepository.UpdateUserAsync(Id);
 
                 if (user == null)
@@ -50,19 +64,26 @@ namespace RugbyManagementSystem.Application.Services
                 user.Password = Id.Password;
 
                 return user;
-            }
+            
         }
 
-        public async Task<UserDetails?> DeleteUserAsync(Guid Id)
+        public async Task<UserDetails?> DeleteUserAsync(Guid id)
         {
-            var user = await _userRepository.GetUserByIdAsync(Id);
+            if (id == Guid.Empty)
+                throw new ArgumentException("Please enter a valid Id");
 
-            if (user == null)
-                return null;
-
-            await _userRepository.DeleteUserAsync(Id);
+            var user = await _userRepository.DeleteUserAsync(id);
 
             return user;
+        }
+
+
+        public async Task<UserDetails?> GetByUsernameAsync(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("Please enter a username.");
+
+            return await _userRepository.GetByUsernameAsync(username);
         }
     }
 }

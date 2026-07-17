@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RugbyManagementSystem.Application.DTOs.UserDTOs;
 using RugbyManagementSystem.Application.Interfaces;
@@ -13,10 +14,12 @@ namespace RugbyManagementSystem_Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
+        private readonly TokenService _tokenService;
 
-        public UserController(IUserServices userServices)
+        public UserController(IUserServices userServices, TokenService tokenService)
         {
             _userServices = userServices;
+            _tokenService = tokenService;
         }
 
         [HttpPost]
@@ -34,6 +37,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserDetails>> GetAllUsersAsync()
         {
             var user = await _userServices.GetAllUsersAsync();
@@ -42,6 +46,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpGet("{Id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserDetails>> GetUserById(Guid Id)
         {
             var user = await _userServices.GetUserByIdAsync(Id);
@@ -51,6 +56,19 @@ namespace RugbyManagementSystem_Api.Controllers
 
             return Ok(user);
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO dto)
+        {
+            var user = await _userServices.GetByUsernameAsync(dto.Username);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+                return Unauthorized("Invalid username or password.");
+
+            var token = _tokenService.GenerateToken(user);
+            return Ok(new { token });
+        }
+
 
         [HttpPut]
         public async Task<ActionResult<UserDetails>> UpdateUserAsync(Guid userId ,UserDetails user)
@@ -68,6 +86,7 @@ namespace RugbyManagementSystem_Api.Controllers
 
 
         [HttpDelete("Delete a User")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteUserAsync(Guid Id, UserDetails user)
         {
 

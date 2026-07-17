@@ -24,14 +24,25 @@ namespace RugbyManagementSystem.Infastructure.Repository
 
         }
 
-        public async Task<IEnumerable<UserDetails>> GetAllUsersAsync()
+        public async Task<List<GetUserDTOs>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Select(u => new GetUserDTOs
+                {
+                    Username = u.Username
+                })
+                .ToListAsync();
         }
 
-        public async Task<UserDetails?> GetUserByIdAsync(Guid Id)
+        public async Task<GetUserDTOs?> GetUserByIdAsync(Guid id)
         {
-            return await _context.Users.FindAsync(Id);
+            return await _context.Users
+                .Where(u => u.Id == id)
+                .Select(u => new GetUserDTOs
+                {
+                    Username = u.Username
+                })
+                .FirstOrDefaultAsync();
         }
 
         public async Task<UserDetails?> UpdateUserAsync(UserDetails user)
@@ -43,9 +54,9 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return user;
         }
 
-        public async Task<UserDetails?> DeleteUserAsync(Guid Id)
+        public async Task<UserDetails?> DeleteUserAsync(Guid id)
         {
-            var user = await _context.Users.FindAsync(Id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
                 return null;
@@ -55,5 +66,11 @@ namespace RugbyManagementSystem.Infastructure.Repository
 
             return user;
         }
+
+        public async Task<UserDetails?> GetByUsernameAsync(string username)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        }
+
     }
 }

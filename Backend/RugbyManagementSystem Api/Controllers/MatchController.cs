@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RugbyManagementSystem.Application.DTOs.MatchDTOs;
 using RugbyManagementSystem.Application.Interfaces;
@@ -19,6 +20,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CreateMatchDTOs>> CreateMatchAsync(CreateMatchDTOs matchDetails)
         {
             var newMatch = await _matchServices.CreateMatchAsync(matchDetails);
@@ -46,6 +48,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CreateMatchDTOs>> UpdateMatch(UpdateMatchDTOs dto)
         {
             var match = await _matchServices.UpdateMatchAsync(dto);
