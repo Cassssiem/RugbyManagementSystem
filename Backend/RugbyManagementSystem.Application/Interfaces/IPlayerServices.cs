@@ -9,10 +9,10 @@ namespace RugbyManagementSystem.Application.Interfaces
 {
     public interface IPlayerServices
     {
-        Task<IEnumerable<PlayerDetails>> GetAllPlayersAsync();
-        Task<PlayerDetails> GetPlayerByIdAsync(Guid playerId);
-        Task<CreatePlayerDTOs> CreatePlayerAsync(CreatePlayerDTOs player);
-        Task<UpdatePlayerDTOs> UpdatePlayerAsync(UpdatePlayerDTOs dto);
-        Task<DeletePlayerDTO> DeletePlayerAsync(Guid playerId);
+        Task<List<GetPlayerDTO>> GetAllPlayersAsync();
+        Task<GetPlayerDTO?> GetPlayerByIdAsync(Guid playerId);
+        Task<GetPlayerDTO> CreatePlayerAsync(CreatePlayerDTOs player);
+        Task<GetPlayerDTO?> UpdatePlayerAsync(Guid playerId, UpdatePlayerDTOs player);
+        Task<GetPlayerDTO?> DeletePlayerAsync(Guid playerId);
     }
 }

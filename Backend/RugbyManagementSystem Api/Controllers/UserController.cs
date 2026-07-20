@@ -5,6 +5,7 @@ using RugbyManagementSystem.Application.DTOs.UserDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Application.Services;
 using RugbyManagementSystem.Domain.Entities;
+using RugbyManagementSystem.Domain.Enums;
 using System.Numerics;
 
 namespace RugbyManagementSystem_Api.Controllers
@@ -23,21 +24,20 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserDetails>> CreateUserAsync(CreateUserDTOs user)
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public async Task<ActionResult<UserDetails>> CreateUserAsync(UserDetails user)
         {
             var newUser = await _userServices.CreateUserAsync(user);
 
-            return CreatedAtAction
-                (
-                    nameof(GetUserById),
-                    new { Id = newUser.Id },
-                    newUser
-                );
-            
+            return CreatedAtAction(
+                nameof(GetUserById),
+                new { Id = newUser.Id },
+                newUser
+            );
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<ActionResult<UserDetails>> GetAllUsersAsync()
         {
             var user = await _userServices.GetAllUsersAsync();
@@ -46,7 +46,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpGet("{Id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<ActionResult<UserDetails>> GetUserById(Guid Id)
         {
             var user = await _userServices.GetUserByIdAsync(Id);
@@ -70,23 +70,24 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<ActionResult<UserDetails>> UpdateUserAsync(Guid userId ,UserDetails user)
+        [HttpPut("{userId:guid}")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public async Task<ActionResult<UserDetails>> UpdateUserAsync(Guid userId, UserDetails user)
         {
             if (userId != user.Id)
-                return BadRequest("User does not exist");
+                return BadRequest("The route ID does not match the user ID.");
 
-            var updateuser = await _userServices.UpdateUserAsync(user);
+            var updatedUser = await _userServices.UpdateUserAsync(userId, user);
 
-            if (updateuser == null)
-                return NotFound(nameof(user));
+            if (updatedUser == null)
+                return NotFound();
 
-            return Ok(updateuser);
+            return Ok(updatedUser);
         }
 
 
         [HttpDelete("Delete a User")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<ActionResult> DeleteUserAsync(Guid Id, UserDetails user)
         {
 

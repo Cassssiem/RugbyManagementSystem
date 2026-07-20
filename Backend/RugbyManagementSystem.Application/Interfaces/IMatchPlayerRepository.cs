@@ -10,8 +10,7 @@ namespace RugbyManagementSystem.Application.Interfaces
     {
         Task<MatchPlayer?> GetPlayerMatchAsync(Guid playerId, int matchId);
 
-        Task<MatchPlayer> AddAsync(MatchPlayer matchPlayer);
-
+        Task<MatchPlayer> AddPlayerToMatchAsync(MatchPlayer matchPlayer);
         Task<MatchPlayer> UpdateAsync(MatchPlayer matchPlayer);
 
         Task DeleteAsync(MatchPlayer matchPlayer);
@@ -19,5 +18,6 @@ namespace RugbyManagementSystem.Application.Interfaces
         Task<List<MatchPlayer>> GetPlayersByMatchAsync(int matchId);
 
         Task<List<MatchPlayer>> GetMatchesByPlayerAsync(Guid playerId);
+        Task<List<MatchPlayer>> GetAllByPlayerIdAsync(Guid playerId);
     }
 }

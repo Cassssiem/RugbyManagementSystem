@@ -30,6 +30,9 @@ namespace RugbyManagementSystem.Infastructure.Data
             modelBuilder.Entity<MatchDetails>()
                 .HasKey(p => p.Id);
 
+            modelBuilder.Entity<PlayerDetails>()
+    .Property(p => p.Position)
+    .HasConversion<string>();
 
             // Player -> MatchPlayer
             modelBuilder.Entity<MatchPlayer>()

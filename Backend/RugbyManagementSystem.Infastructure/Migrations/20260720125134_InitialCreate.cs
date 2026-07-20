@@ -20,8 +20,8 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     Opponent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Titans = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OpponentScore = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Titans = table.Column<int>(type: "int", nullable: false),
+                    OpponentScore = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,8 +38,9 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     NickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MatchesPlayed = table.Column<int>(type: "int", nullable: false),
                     Tries = table.Column<int>(type: "int", nullable: false),
-                    Conversion = table.Column<int>(type: "int", nullable: false)
+                    Conversions = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +54,7 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

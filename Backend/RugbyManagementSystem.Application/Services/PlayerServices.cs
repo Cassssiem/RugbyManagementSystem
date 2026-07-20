@@ -17,99 +17,68 @@ namespace RugbyManagementSystem.Application.Services
             _playerRepository = playerRepository;
             }
 
-        public async Task<CreatePlayerDTOs> CreatePlayerAsync(CreatePlayerDTOs player)
-        {
-
-            if (player == null)
-                throw new ArgumentException(nameof(player));
-
-
-            var newPlayer = new PlayerDetails
-            {
-                Name = player.Name,
-                Age = player.Age,
-                Surname = player.Surname,
-                NickName = player.NickName,
-                Position = player.Position,
-                MatchesPlayed = player.MatchesPlayed,
-                Tries = player.Tries,
-                Conversion = player.Conversion
-            };
-
-            await _playerRepository.CreatePlayerAsync(newPlayer);
-
-            return player;
-        }
-
-
-
-        public async Task<PlayerDetails?> GetPlayerByIdAsync(Guid playerId)
-        {
-            if (playerId == Guid.Empty)
-                throw new ArgumentException("Please enter a Valid Id");
-            var player = await _playerRepository.GetPlayerByIdAsync(playerId);
-            return player;
-        }
-
-
-        public async Task<UpdatePlayerDTOs?> UpdatePlayerAsync(UpdatePlayerDTOs dto)
-        {
-            if (dto.Id == Guid.Empty)
-                throw new ArgumentException("Please enter a Valid Id");
-
-            var player = await _playerRepository.GetPlayerByIdAsync(dto.Id);
-
-            if (player == null)
-                return null;
-
-            player.Name = dto.Name;
-            player.Age = dto.Age;
-            player.Surname = dto.Surname;
-            player.NickName = dto.NickName;
-            player.Position = dto.Position;
-            player.MatchesPlayed = dto.MatchesPlayed;
-            player.Tries = dto.Tries;
-            player.Conversion = dto.Conversion;
-
-            await _playerRepository.UpdatePlayerAsync(player);
-
-            return new UpdatePlayerDTOs
-            {
-                Id = player.Id,
-                Name = player.Name,
-                Age = player.Age,
-                Surname = player.Surname,
-                NickName = player.NickName,
-                Position = player.Position,
-                MatchesPlayed = player.MatchesPlayed,
-                Tries = player.Tries,
-                Conversion = player.Conversion
-            };
-        }
-
-        public async Task<IEnumerable<PlayerDetails>> GetAllPlayersAsync()
+        public async Task<List<GetPlayerDTO>> GetAllPlayersAsync()
         {
             return await _playerRepository.GetAllAsync();
         }
 
-        public async Task<DeletePlayerDTO?> DeletePlayerAsync(Guid playerId)
+        public async Task<GetPlayerDTO?> GetPlayerByIdAsync(Guid playerId)
         {
             if (playerId == Guid.Empty)
-                throw new ArgumentException("Please enter a Valid Id");
+                throw new ArgumentException("Please enter a valid player Id.");
 
-            var player = await _playerRepository.GetPlayerByIdAsync(playerId);
+            return await _playerRepository.GetPlayerByIdAsync(playerId);
+        }
 
-            if (player == null)
+        public async Task<GetPlayerDTO> CreatePlayerAsync(CreatePlayerDTOs player)
+        {
+            if (string.IsNullOrWhiteSpace(player.Name))
+                throw new ArgumentException("Please enter a player name.");
+
+            if (player.Age < 18)
+                throw new ArgumentException("Player has to be over 18 to be registered as a senior.");
+
+            var newPlayer = new GetPlayerDTO
+            {
+                Name = player.Name,
+                Surname = player.Surname,
+                NickName = player.NickName,
+                Age = player.Age,
+                Position = player.Position,
+                MatchesPlayed = 0,
+                Tries = 0,
+                Conversions = 0
+            };
+
+            return await _playerRepository.CreatePlayerAsync(newPlayer);
+        }
+
+        public async Task<GetPlayerDTO?> UpdatePlayerAsync(Guid playerId, UpdatePlayerDTOs player)
+        {
+            if (playerId == Guid.Empty)
+                throw new ArgumentException("Please enter a valid player Id.");
+
+            var existing = await _playerRepository.GetPlayerByIdAsync(playerId);
+            if (existing == null)
                 return null;
 
-            await _playerRepository.DeletePlayerAsync(playerId);
+            existing.Name = player.Name;
+            existing.Surname = player.Surname;
+            existing.NickName = player.NickName;
+            existing.Age = player.Age;
+            existing.Position = player.Position;
+            // MatchesPlayed, Tries, Conversion intentionally NOT set here —
+            // they're derived from MatchPlayer records via RecalculatePlayerStatsAsync
 
-            return new DeletePlayerDTO
-            {
-                Id = player.Id,
-                Name = player.Name,
-                Surname = player.Surname
-            };
+            return await _playerRepository.UpdatePlayerAsync(existing);
+        }
+
+        public async Task<GetPlayerDTO?> DeletePlayerAsync(Guid playerId)
+        {
+            if (playerId == Guid.Empty)
+                throw new ArgumentException("Please enter a valid player Id.");
+
+            return await _playerRepository.DeletePlayerAsync(playerId);
         }
 
 

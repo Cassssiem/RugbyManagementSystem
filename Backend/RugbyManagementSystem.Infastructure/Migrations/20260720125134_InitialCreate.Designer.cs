@@ -12,8 +12,8 @@ using RugbyManagementSystem.Infastructure.Data;
 namespace RugbyManagementSystem.Infastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260717070133_UpdatedVertion")]
-    partial class UpdatedVertion
+    [Migration("20260720125134_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,7 +85,7 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("Conversion")
+                    b.Property<int>("Conversions")
                         .HasColumnType("int");
 
                     b.Property<int>("MatchesPlayed")
@@ -125,9 +125,8 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()

@@ -15,7 +15,7 @@ namespace RugbyManagementSystem.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<UserDetails> CreateUserAsync(CreateUserDTOs User)
+        public async Task<UserDetails> CreateUserAsync(UserDetails User)
         {
 
             if (string.IsNullOrWhiteSpace(User.Username))
@@ -49,22 +49,20 @@ namespace RugbyManagementSystem.Application.Services
             return User;
         }
 
-        public async Task<UserDetails?> UpdateUserAsync(UserDetails Id)
+        // UserServices.cs — does the real work
+        public async Task<UserDetails?> UpdateUserAsync(Guid userId, UserDetails user)
         {
+            var existing = await _userRepository.GetUserEntityByIdAsync(userId);   // ← "Entity" added
+            if (existing == null)
+                return null;
 
-            if (Id == null)
-                throw new ArgumentException("Please enter a valid Id");
-            
-                var user = await _userRepository.UpdateUserAsync(Id);
+            existing.Username = user.Username;
+            existing.Role = user.Role;
 
-                if (user == null)
-                    return null;
+            if (!string.IsNullOrWhiteSpace(user.Password))
+                existing.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-                user.Username = Id.Username;
-                user.Password = Id.Password;
-
-                return user;
-            
+            return await _userRepository.UpdateUserAsync(existing);
         }
 
         public async Task<UserDetails?> DeleteUserAsync(Guid id)

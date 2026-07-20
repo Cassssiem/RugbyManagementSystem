@@ -25,7 +25,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
         }
 
 
-        public async Task<MatchPlayer> AddAsync(MatchPlayer matchPlayer)
+        public async Task<MatchPlayer> AddPlayerToMatchAsync(MatchPlayer matchPlayer)
         {
             _context.MatchPlayers.Add(matchPlayer);
 
@@ -63,6 +63,13 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return await _context.MatchPlayers
                 .Where(mp => mp.PlayerId == playerId)
                 .Include(mp => mp.Match)
+                .ToListAsync();
+        }
+
+        public async Task<List<MatchPlayer>> GetAllByPlayerIdAsync(Guid playerId)
+        {
+            return await _context.MatchPlayers
+                .Where(mp => mp.PlayerId == playerId)
                 .ToListAsync();
         }
 

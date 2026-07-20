@@ -82,7 +82,7 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("Conversion")
+                    b.Property<int>("Conversions")
                         .HasColumnType("int");
 
                     b.Property<int>("MatchesPlayed")
@@ -122,9 +122,8 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()

@@ -5,6 +5,7 @@ using RugbyManagementSystem.Application.DTOs.MatchDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Application.Services;
 using RugbyManagementSystem.Domain.Entities;
+using RugbyManagementSystem.Domain.Enums;
 
 namespace RugbyManagementSystem_Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<ActionResult<CreateMatchDTOs>> CreateMatchAsync(CreateMatchDTOs matchDetails)
         {
             var newMatch = await _matchServices.CreateMatchAsync(matchDetails);
@@ -48,7 +49,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<ActionResult<CreateMatchDTOs>> UpdateMatch(UpdateMatchDTOs dto)
         {
             var match = await _matchServices.UpdateMatchAsync(dto);

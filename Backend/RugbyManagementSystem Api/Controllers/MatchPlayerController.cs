@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs;
 using RugbyManagementSystem.Application.Interfaces;
+using RugbyManagementSystem.Domain.Enums;
 
 namespace RugbyManagementSystem_Api.Controllers
 {
@@ -19,10 +20,10 @@ namespace RugbyManagementSystem_Api.Controllers
         // POST api/matches/5/players/{playerId}
         // Add a player to a match's squad
         [HttpPost("matches/{matchId:int}/players/{playerId:guid}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddPlayerToMatch(int matchId, Guid playerId)
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public async Task<IActionResult> AddPlayerToMatch(int matchId, Guid playerId, AddMatchPlayerDTO dto)
         {
-            var result = await _matchPlayerServices.AddPlayerToMatchAsync(playerId, matchId);
+            var result = await _matchPlayerServices.AddPlayerToMatchAsync(playerId, matchId, dto);
             return CreatedAtAction(nameof(GetPlayersByMatch), new { matchId }, result);
         }
 
@@ -47,7 +48,7 @@ namespace RugbyManagementSystem_Api.Controllers
         // PUT api/matches/5/players/{playerId}
         // Update a player's stats (tries/conversions) for that match
         [HttpPut("matches/{matchId:int}/players/{playerId:guid}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<IActionResult> UpdatePlayerMatchStats(int matchId, Guid playerId, UpdateMatchPlayerDto dto)
         {
             if (matchId != dto.MatchId || playerId != dto.PlayerId)
@@ -64,7 +65,7 @@ namespace RugbyManagementSystem_Api.Controllers
         // DELETE api/matches/5/players/{playerId}
         // Remove a player from a match's squad
         [HttpDelete("matches/{matchId:int}/players/{playerId:guid}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<IActionResult> RemovePlayerFromMatch(int matchId, Guid playerId)
         {
             var removed = await _matchPlayerServices.RemovePlayerFromMatchAsync(playerId, matchId);

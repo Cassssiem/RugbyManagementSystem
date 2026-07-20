@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RugbyManagementSystem.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -21,15 +22,8 @@ namespace RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs
         public int Age { get; set; }
 
         [Required]
-        public string Position { get; set; }
+        public PlayerPosition Position { get; set; }
 
-        [Required]
-        public int MatchesPlayed { get; set; }
 
-        [Required]
-        public int Tries { get; set; }
-
-        [Required]
-        public int Conversion { get; set; }
     }
 }

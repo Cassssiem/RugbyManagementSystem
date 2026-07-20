@@ -8,8 +8,8 @@ namespace RugbyManagementSystem.Application.Interfaces
 {
     public interface IMatchPlayerServices
     {
-        Task<MatchPlayer> AddPlayerToMatchAsync(Guid playerId, int matchId);
-
+        // IMatchPlayerServices.cs
+        Task<MatchPlayer> AddPlayerToMatchAsync(Guid playerId, int matchId, AddMatchPlayerDTO dto);
         Task<MatchPlayer?> UpdatePlayerMatchStatsAsync(UpdateMatchPlayerDto dto);
 
         Task<List<MatchPlayer>> GetPlayersByMatchAsync(int matchId);

@@ -14,5 +14,6 @@ namespace RugbyManagementSystem.Application.Interfaces
         Task<UserDetails?> UpdateUserAsync(UserDetails user);
         Task<UserDetails?> DeleteUserAsync(Guid Id);
         Task<UserDetails?> GetByUsernameAsync(string username);
+        Task<UserDetails?> GetUserEntityByIdAsync(Guid Id);
     }
 }

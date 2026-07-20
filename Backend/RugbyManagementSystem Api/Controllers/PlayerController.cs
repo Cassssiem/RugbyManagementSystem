@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
+using RugbyManagementSystem.Application.DTOs.PlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
+using RugbyManagementSystem.Domain.Enums;
 using System.Numerics;
 
 namespace RugbyManagementSystem_Api.Controllers
@@ -20,25 +22,22 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<CreatePlayerDTOs>> CreatePlayer(CreatePlayerDTOs player)
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public async Task<ActionResult<GetPlayerDTO>> CreatePlayer(CreatePlayerDTOs player)
         {
             var newPlayer = await _playerService.CreatePlayerAsync(player);
-
             return Ok(newPlayer);
         }
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CreatePlayerDTOs>>> GetAllPlayers()
+        public async Task<ActionResult<List<GetPlayerDTO>>> GetAllPlayers()
         {
             var player = await _playerService.GetAllPlayersAsync();
-
             return Ok(player);
         }
 
 
         [HttpGet("{playerId}")]
-        public async Task<ActionResult<CreatePlayerDTOs>> GetPlayerById(Guid playerId)
+        public async Task<ActionResult<GetPlayerDTO>> GetPlayerById(Guid playerId)
         {
             var player = await _playerService.GetPlayerByIdAsync(playerId);
 
@@ -48,23 +47,19 @@ namespace RugbyManagementSystem_Api.Controllers
             return Ok(player);
         }
 
-        [HttpPut("Update a players Details")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<UpdatePlayerDTOs>> UpdatePLayerAsync(Guid playerId, UpdatePlayerDTOs player)
+        [HttpPut("{playerId:guid}")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public async Task<ActionResult<GetPlayerDTO>> UpdatePlayerAsync(Guid playerId, UpdatePlayerDTOs player)
         {
-            if (playerId != player.Id)
-                return BadRequest("Player does not exist");
+            var updatedPlayer = await _playerService.UpdatePlayerAsync(playerId, player);
 
-            var updateplayer =await _playerService.UpdatePlayerAsync(player);
+            if (updatedPlayer == null)
+                return NotFound();
 
-            if (updateplayer == null)
-                return NotFound(nameof(player));
-
-            return Ok(updateplayer);
+            return Ok(updatedPlayer);
         }
-
         [HttpDelete("Delete a player")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<ActionResult> DeletePLayerAsunc(Guid playerId)
         {
 

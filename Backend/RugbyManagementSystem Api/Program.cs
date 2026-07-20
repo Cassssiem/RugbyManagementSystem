@@ -5,6 +5,7 @@ using Microsoft.OpenApi;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Application.Services;
 using RugbyManagementSystem.Domain.Entities;
+using RugbyManagementSystem.Domain.Enums;
 using RugbyManagementSystem.Infastructure.Data;
 using RugbyManagementSystem.Infastructure.Repository;
 using RugbyManagementSystem_Api.Middleware;
@@ -117,21 +118,20 @@ namespace RugbyManagementSystem_Api
                 app.UseSwaggerUI();
             }
 
-           
+
 
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                db.Database.Migrate(); // applies any pending migrations automatically
+                db.Database.Migrate();
 
-                // Seed an admin user
-                if (!db.Users.Any(u => u.Role == "Admin"))
+                if (!db.Users.Any(u => u.Role == UserRoles.Admin))
                 {
                     db.Users.Add(new UserDetails
                     {
                         Username = "Gino",
-                        Password = BCrypt.Net.BCrypt.HashPassword("TheGreatGino"), // change this before real use
-                        Role = "Admin"
+                        Password = BCrypt.Net.BCrypt.HashPassword("TheGreatGino"),
+                        Role = UserRoles.Admin
                     });
 
                     db.SaveChanges();

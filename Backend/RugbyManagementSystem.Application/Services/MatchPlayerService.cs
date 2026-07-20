@@ -21,33 +21,48 @@ namespace RugbyManagementSystem.Application.Services
             _playerRepository = playerRepository;
             _matchRepository = matchRepository;
         }
+        private async Task RecalculatePlayerStatsAsync(Guid playerId)
+        {
+            var records = await _matchPlayerRepository.GetAllByPlayerIdAsync(playerId);
 
-        public async Task<MatchPlayer> AddPlayerToMatchAsync(Guid playerId, int matchId)
+            var player = await _playerRepository.GetPlayerByIdAsync(playerId);
+            if (player == null)
+                return;
+
+            player.MatchesPlayed = records.Count();
+            player.Tries = records.Sum(r => r.Tries);
+            player.Conversions = records.Sum(r => r.Conversions);
+
+            await _playerRepository.UpdatePlayerAsync(player);
+        }
+        public async Task<MatchPlayer> AddPlayerToMatchAsync(Guid playerId, int matchId, AddMatchPlayerDTO dto)
         {
             var player = await _playerRepository.GetPlayerByIdAsync(playerId);
-
             if (player == null)
                 throw new Exception("Player not found.");
 
             var match = await _matchRepository.GetMatchByIdAsync(matchId);
-
             if (match == null)
                 throw new Exception("Match not found.");
 
             var existing = await _matchPlayerRepository.GetPlayerMatchAsync(playerId, matchId);
-
             if (existing != null)
                 throw new Exception("Player is already assigned to this match.");
+
+            if (dto.Tries < 0 || dto.Conversions < 0)
+                throw new ArgumentException("Tries and conversions cannot be negative.");
 
             var matchPlayer = new MatchPlayer
             {
                 PlayerId = playerId,
                 MatchId = matchId,
-                Tries = 0,
-                Conversions = 0
+                Tries = dto.Tries,
+                Conversions = dto.Conversions
             };
 
-            return await _matchPlayerRepository.AddAsync(matchPlayer);
+            var result = await _matchPlayerRepository.AddPlayerToMatchAsync(matchPlayer);
+            await RecalculatePlayerStatsAsync(playerId);   // ← is this actually there?
+            return result; ;
         }
 
         public async Task<MatchPlayer> UpdatePlayerMatchStatsAsync(UpdateMatchPlayerDto dto)
@@ -56,17 +71,17 @@ namespace RugbyManagementSystem.Application.Services
                 .GetPlayerMatchAsync(dto.PlayerId, dto.MatchId);
 
             if (matchPlayer == null)
-                throw new KeyNotFoundException(
-                    "Player is not assigned to this match.");
+                throw new KeyNotFoundException("Player is not assigned to this match.");
 
             if (dto.Tries < 0 || dto.Conversions < 0)
-                throw new ArgumentException(
-                    "Tries and conversions cannot be negative.");
+                throw new ArgumentException("Tries and conversions cannot be negative.");
 
             matchPlayer.Tries = dto.Tries;
             matchPlayer.Conversions = dto.Conversions;
 
-            return await _matchPlayerRepository.UpdateAsync(matchPlayer);
+            var result = await _matchPlayerRepository.UpdateAsync(matchPlayer);
+            await RecalculatePlayerStatsAsync(dto.PlayerId);   // ← add this
+            return result;
         }
 
         public async Task<List<MatchPlayer>> GetPlayersByMatchAsync(int matchId)
@@ -94,6 +109,7 @@ namespace RugbyManagementSystem.Application.Services
                 return false;
 
             await _matchPlayerRepository.DeleteAsync(matchPlayer);
+            await RecalculatePlayerStatsAsync(playerId);   // ← add this
 
             return true;
         }

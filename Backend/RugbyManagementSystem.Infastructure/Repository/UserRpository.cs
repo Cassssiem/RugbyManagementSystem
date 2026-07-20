@@ -38,22 +38,17 @@ namespace RugbyManagementSystem.Infastructure.Repository
         {
             return await _context.Users
                 .Where(u => u.Id == id)
-                .Select(u => new GetUserDTOs
-                {
-                    Username = u.Username
-                })
+                .Select(u => new GetUserDTOs { Username = u.Username })
                 .FirstOrDefaultAsync();
         }
 
+        // UserRpository.cs — the method itself
         public async Task<UserDetails?> UpdateUserAsync(UserDetails user)
         {
             _context.Users.Update(user);
-
             await _context.SaveChangesAsync();
-
             return user;
         }
-
         public async Task<UserDetails?> DeleteUserAsync(Guid id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -72,5 +67,9 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
+        public async Task<UserDetails?> GetUserEntityByIdAsync(Guid id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
     }
 }
