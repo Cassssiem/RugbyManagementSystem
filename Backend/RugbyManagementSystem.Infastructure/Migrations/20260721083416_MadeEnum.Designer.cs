@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RugbyManagementSystem.Infastructure.Data;
 
@@ -11,9 +12,11 @@ using RugbyManagementSystem.Infastructure.Data;
 namespace RugbyManagementSystem.Infastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260721083416_MadeEnum")]
+    partial class MadeEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,13 +65,6 @@ namespace RugbyManagementSystem.Infastructure.Migrations
 
                     b.Property<int>("Conversions")
                         .HasColumnType("int");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Team")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Tries")
                         .HasColumnType("int");
@@ -119,6 +115,43 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.ToTable("Players");
                 });
 
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.TeamPlayer", b =>
+                {
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Team")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayerId", "Team");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamPlayers");
+                });
+
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.UserDetails", b =>
                 {
                     b.Property<Guid>("Id")
@@ -160,6 +193,21 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.TeamPlayer", b =>
+                {
+                    b.HasOne("RugbyManagementSystem.Domain.Entities.PlayerDetails", "Player")
+                        .WithMany("TeamPlayers")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RugbyManagementSystem.Domain.Entities.Team", null)
+                        .WithMany("TeamPlayers")
+                        .HasForeignKey("TeamId");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.MatchDetails", b =>
                 {
                     b.Navigation("MatchPlayers");
@@ -168,6 +216,13 @@ namespace RugbyManagementSystem.Infastructure.Migrations
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.PlayerDetails", b =>
                 {
                     b.Navigation("MatchPlayers");
+
+                    b.Navigation("TeamPlayers");
+                });
+
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.Team", b =>
+                {
+                    b.Navigation("TeamPlayers");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,7 +18,6 @@ namespace RugbyManagementSystem.Infastructure.Data
         public DbSet<UserDetails> Users { get; set; }
         public DbSet<MatchPlayer> MatchPlayers { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -31,8 +30,8 @@ namespace RugbyManagementSystem.Infastructure.Data
                 .HasKey(p => p.Id);
 
             modelBuilder.Entity<PlayerDetails>()
-    .Property(p => p.Position)
-    .HasConversion<string>();
+                .Property(p => p.Position)
+                .HasConversion<string>();
 
             // Player -> MatchPlayer
             modelBuilder.Entity<MatchPlayer>()
@@ -41,13 +40,33 @@ namespace RugbyManagementSystem.Infastructure.Data
                 .HasForeignKey(mp => mp.PlayerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
             // Match -> MatchPlayer
             modelBuilder.Entity<MatchPlayer>()
                 .HasOne(mp => mp.Match)
                 .WithMany(m => m.MatchPlayers)
                 .HasForeignKey(mp => mp.MatchId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MatchPlayer>()
+    .HasKey(mp => new { mp.PlayerId, mp.MatchId });
+
+            modelBuilder.Entity<MatchPlayer>()
+                .Property(mp => mp.Team)
+                .HasConversion<string>();   // new
+
+            modelBuilder.Entity<MatchPlayer>()
+                .HasOne(mp => mp.Player)
+                .WithMany(p => p.MatchPlayers)
+                .HasForeignKey(mp => mp.PlayerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MatchPlayer>()
+                .HasOne(mp => mp.Match)
+                .WithMany(m => m.MatchPlayers)
+                .HasForeignKey(mp => mp.MatchId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // entire TeamPlayer block removed
         }
     }
 }

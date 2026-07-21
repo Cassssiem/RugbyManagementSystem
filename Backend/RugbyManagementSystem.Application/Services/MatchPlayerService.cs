@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
+using RugbyManagementSystem.Domain.Enums;
 
 namespace RugbyManagementSystem.Application.Services
 {
@@ -21,6 +21,7 @@ namespace RugbyManagementSystem.Application.Services
             _playerRepository = playerRepository;
             _matchRepository = matchRepository;
         }
+
         private async Task RecalculatePlayerStatsAsync(Guid playerId)
         {
             var records = await _matchPlayerRepository.GetAllByPlayerIdAsync(playerId);
@@ -35,6 +36,7 @@ namespace RugbyManagementSystem.Application.Services
 
             await _playerRepository.UpdatePlayerAsync(player);
         }
+
         public async Task<MatchPlayer> AddPlayerToMatchAsync(Guid playerId, int matchId, AddMatchPlayerDTO dto)
         {
             var player = await _playerRepository.GetPlayerByIdAsync(playerId);
@@ -56,19 +58,20 @@ namespace RugbyManagementSystem.Application.Services
             {
                 PlayerId = playerId,
                 MatchId = matchId,
+                Team = dto.Team,
+                Position = dto.Position,
                 Tries = dto.Tries,
                 Conversions = dto.Conversions
             };
 
             var result = await _matchPlayerRepository.AddPlayerToMatchAsync(matchPlayer);
-            await RecalculatePlayerStatsAsync(playerId);   // ← is this actually there?
-            return result; ;
+            await RecalculatePlayerStatsAsync(playerId);
+            return result;
         }
 
         public async Task<MatchPlayer> UpdatePlayerMatchStatsAsync(UpdateMatchPlayerDto dto)
         {
-            var matchPlayer = await _matchPlayerRepository
-                .GetPlayerMatchAsync(dto.PlayerId, dto.MatchId);
+            var matchPlayer = await _matchPlayerRepository.GetPlayerMatchAsync(dto.PlayerId, dto.MatchId);
 
             if (matchPlayer == null)
                 throw new KeyNotFoundException("Player is not assigned to this match.");
@@ -80,25 +83,61 @@ namespace RugbyManagementSystem.Application.Services
             matchPlayer.Conversions = dto.Conversions;
 
             var result = await _matchPlayerRepository.UpdateAsync(matchPlayer);
-            await RecalculatePlayerStatsAsync(dto.PlayerId);   // ← add this
+            await RecalculatePlayerStatsAsync(dto.PlayerId);
             return result;
         }
 
-        public async Task<List<MatchPlayer>> GetPlayersByMatchAsync(int matchId)
+        public async Task<MatchPLayerDTO?> GetPlayerMatchAsync(Guid playerId, int matchId)
         {
-            if (matchId < 0)
-                throw new ArgumentOutOfRangeException("Please enter a valid match Id");
+            var matchPlayer = await _matchPlayerRepository.GetPlayerMatchAsync(playerId, matchId);
 
+            if (matchPlayer == null)
+                return null;
 
-            return await _matchPlayerRepository.GetPlayersByMatchAsync(matchId);
+            return new MatchPLayerDTO
+            {
+                PlayerId = matchPlayer.PlayerId,
+                PlayerName = matchPlayer.Player.Name,
+                MatchId = matchPlayer.MatchId,
+                Opponent = matchPlayer.Match.Opponent,
+                Tries = matchPlayer.Tries,
+                Conversions = matchPlayer.Conversions
+            };
         }
 
-        public async Task<List<MatchPlayer>> GetMatchesByPlayerAsync(Guid playerId)
+        public async Task<List<GetMatchPLayerDTO>> GetPlayersByMatchAsync(int matchId)
+        {
+            var matchPlayers = await _matchPlayerRepository.GetPlayersByMatchAsync(matchId);
+
+            return matchPlayers.Select(mp => new GetMatchPLayerDTO
+            {
+                PlayerId = mp.PlayerId,
+                PlayerName = mp.Player.Name,
+                MatchId = mp.MatchId,
+                Opponent = mp.Match.Opponent,   // add this
+                Date = mp.Match.Date,           // add this
+                Tries = mp.Tries,
+                Conversions = mp.Conversions
+            }).ToList();
+        }
+
+        public async Task<List<GetMatchPLayerDTO>> GetMatchesByPlayerAsync(Guid playerId)
         {
             if (playerId == Guid.Empty)
-                throw new NullReferenceException("Please enter a valid Id");
+                throw new ArgumentException("Please enter a valid Id");
 
-            return await _matchPlayerRepository.GetMatchesByPlayerAsync(playerId);
+            var matchPlayers = await _matchPlayerRepository.GetMatchesByPlayerAsync(playerId);
+
+            return matchPlayers.Select(mp => new GetMatchPLayerDTO
+            {
+                PlayerId = mp.PlayerId,
+                PlayerName = mp.Player.Name,   // add this
+                MatchId = mp.MatchId,
+                Opponent = mp.Match.Opponent,
+                Date = mp.Match.Date,
+                Tries = mp.Tries,
+                Conversions = mp.Conversions
+            }).ToList();
         }
 
         public async Task<bool> RemovePlayerFromMatchAsync(Guid playerId, int matchId)
@@ -109,10 +148,26 @@ namespace RugbyManagementSystem.Application.Services
                 return false;
 
             await _matchPlayerRepository.DeleteAsync(matchPlayer);
-            await RecalculatePlayerStatsAsync(playerId);   // ← add this
+            await RecalculatePlayerStatsAsync(playerId);
 
             return true;
         }
+
+        public async Task<List<MatchPLayerDTO>> GetPlayersByMatchAndTeamAsync(int matchId, Teams team)
+        {
+            var players = await _matchPlayerRepository.GetPlayersByMatchAndTeamAsync(matchId, team);
+
+            return players.Select(mp => new MatchPLayerDTO
+            {
+                PlayerId = mp.PlayerId,
+                PlayerName = mp.Player.Name,
+                MatchId = mp.MatchId,
+                Opponent = mp.Match.Opponent,
+                MatchDate = mp.Match.Date,
+                Tries = mp.Tries,
+                Conversions = mp.Conversions
+
+            }).ToList();
+        }
     }
 }
-    

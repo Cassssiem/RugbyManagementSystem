@@ -1,4 +1,5 @@
-﻿using RugbyManagementSystem.Domain.Enums;
+﻿using RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs;
+using RugbyManagementSystem.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

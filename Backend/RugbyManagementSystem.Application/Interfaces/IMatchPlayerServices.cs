@@ -1,22 +1,17 @@
 ﻿using RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs;
 using RugbyManagementSystem.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using RugbyManagementSystem.Domain.Enums;
 
 namespace RugbyManagementSystem.Application.Interfaces
 {
     public interface IMatchPlayerServices
     {
-        // IMatchPlayerServices.cs
         Task<MatchPlayer> AddPlayerToMatchAsync(Guid playerId, int matchId, AddMatchPlayerDTO dto);
-        Task<MatchPlayer?> UpdatePlayerMatchStatsAsync(UpdateMatchPlayerDto dto);
-
-        Task<List<MatchPlayer>> GetPlayersByMatchAsync(int matchId);
-
-        Task<List<MatchPlayer>> GetMatchesByPlayerAsync(Guid playerId);
-
+        Task<MatchPlayer> UpdatePlayerMatchStatsAsync(UpdateMatchPlayerDto dto);
+        Task<MatchPLayerDTO?> GetPlayerMatchAsync(Guid playerId, int matchId);
+        Task<List<GetMatchPLayerDTO>> GetPlayersByMatchAsync(int matchId);
+        Task<List<GetMatchPLayerDTO>> GetMatchesByPlayerAsync(Guid playerId);
         Task<bool> RemovePlayerFromMatchAsync(Guid playerId, int matchId);
-
+        Task<List<MatchPLayerDTO>> GetPlayersByMatchAndTeamAsync(int matchId, Teams team);
     }
 }

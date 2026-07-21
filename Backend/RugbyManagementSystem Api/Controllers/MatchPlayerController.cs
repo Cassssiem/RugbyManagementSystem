@@ -17,63 +17,66 @@ namespace RugbyManagementSystem_Api.Controllers
             _matchPlayerServices = matchPlayerServices;
         }
 
-        // POST api/matches/5/players/{playerId}
-        // Add a player to a match's squad
         [HttpPost("matches/{matchId:int}/players/{playerId:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
         public async Task<IActionResult> AddPlayerToMatch(int matchId, Guid playerId, AddMatchPlayerDTO dto)
         {
             var result = await _matchPlayerServices.AddPlayerToMatchAsync(playerId, matchId, dto);
-            return CreatedAtAction(nameof(GetPlayersByMatch), new { matchId }, result);
+            return CreatedAtAction(nameof(GetPlayerMatch), new { matchId, playerId }, result);
         }
 
-        // GET api/matches/5/players
-        // List the squad for a given match
+        [HttpGet("players/{playerId:guid}/matches/{matchId:int}")]
+        public async Task<ActionResult<MatchPLayerDTO>> GetPlayerMatch(Guid playerId, int matchId)
+        {
+            var playerMatch = await _matchPlayerServices.GetPlayerMatchAsync(playerId, matchId);
+            if (playerMatch == null)
+                return NotFound();
+            return Ok(playerMatch);
+        }
+
         [HttpGet("matches/{matchId:int}/players")]
-        public async Task<IActionResult> GetPlayersByMatch(int matchId)
+        public async Task<ActionResult<GetMatchPLayerDTO>> GetPlayersByMatch(int matchId)
         {
             var players = await _matchPlayerServices.GetPlayersByMatchAsync(matchId);
             return Ok(players);
         }
 
-        // GET api/players/{playerId}/matches
-        // List every match a given player has featured in
         [HttpGet("players/{playerId:guid}/matches")]
-        public async Task<IActionResult> GetMatchesByPlayer(Guid playerId)
+        public async Task<ActionResult<GetMatchPLayerDTO>> GetMatchesByPlayer(Guid playerId)
         {
             var matches = await _matchPlayerServices.GetMatchesByPlayerAsync(playerId);
             return Ok(matches);
         }
 
-        // PUT api/matches/5/players/{playerId}
-        // Update a player's stats (tries/conversions) for that match
         [HttpPut("matches/{matchId:int}/players/{playerId:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<IActionResult> UpdatePlayerMatchStats(int matchId, Guid playerId, UpdateMatchPlayerDto dto)
+        public async Task<ActionResult<GetMatchPLayerDTO>> UpdatePlayerMatchStats(int matchId, Guid playerId, UpdateMatchPlayerDto dto)
         {
             if (matchId != dto.MatchId || playerId != dto.PlayerId)
                 return BadRequest("Route parameters do not match the request body.");
 
             var result = await _matchPlayerServices.UpdatePlayerMatchStatsAsync(dto);
-
             if (result == null)
                 return NotFound();
 
             return Ok(result);
         }
 
-        // DELETE api/matches/5/players/{playerId}
-        // Remove a player from a match's squad
         [HttpDelete("matches/{matchId:int}/players/{playerId:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<IActionResult> RemovePlayerFromMatch(int matchId, Guid playerId)
+        public async Task<ActionResult<GetMatchPLayerDTO>> RemovePlayerFromMatch(int matchId, Guid playerId)
         {
             var removed = await _matchPlayerServices.RemovePlayerFromMatchAsync(playerId, matchId);
-
             if (!removed)
                 return NotFound();
 
             return NoContent();
+        }
+        [HttpGet("matches/{matchId:int}/teams/{team}/players")]
+        public async Task<IActionResult> GetPlayersByMatchAndTeam(int matchId, Teams team)
+        {
+            var players = await _matchPlayerServices.GetPlayersByMatchAndTeamAsync(matchId, team);
+            return Ok(players);
         }
     }
 }

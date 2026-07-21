@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
+using RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.PlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Application.Interfaces;
@@ -36,11 +37,13 @@ namespace RugbyManagementSystem.Infastructure.Repository
 
         public async Task<GetPlayerDTO?> GetPlayerByIdAsync(Guid id)
         {
-            var entity = await _context.Players
-                .Include(p => p.MatchPlayers)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            var player = await _context.Players
+                .FirstOrDefaultAsync(p => p.Id == id);   // .Include(p => p.MatchPlayers) no longer needed
 
-            return entity == null ? null : ToDto(entity);
+            if (player == null)
+                return null;
+
+            return ToDto(player);   // just use your existing ToDto helper, no manual mapping needed anymore
         }
 
         public async Task<GetPlayerDTO> CreatePlayerAsync(GetPlayerDTO player)

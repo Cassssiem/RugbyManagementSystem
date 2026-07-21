@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RugbyManagementSystem.Application.DTOs.MatchDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
 using RugbyManagementSystem.Infastructure.Data;
@@ -13,6 +14,16 @@ namespace RugbyManagementSystem.Infastructure.Repository
         {
             _context = context;
         }
+        private static GetMatchDTO ToDto(MatchDetails m) => new GetMatchDTO
+        {
+            Id = m.Id,
+            Opponent = m.Opponent,
+            Date = m.Date,
+            Location = m.Location,
+            Titans = m.Titans,
+            OpponentScore = m.OpponentScore
+        };
+
 
         public async Task<MatchDetails> CreateMatchAsync(MatchDetails match)
         {

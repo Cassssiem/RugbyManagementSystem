@@ -10,6 +10,7 @@ using RugbyManagementSystem.Infastructure.Data;
 using RugbyManagementSystem.Infastructure.Repository;
 using RugbyManagementSystem_Api.Middleware;
 using System.Text;
+using System.Text.Json.Serialization;
 
 
 namespace RugbyManagementSystem_Api
@@ -60,10 +61,13 @@ namespace RugbyManagementSystem_Api
 
             // Controllers
             builder.Services.AddControllers()
-     .AddJsonOptions(options =>
+        .AddJsonOptions(options =>
      {
          options.JsonSerializerOptions.ReferenceHandler =
-             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+          System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+
+         options.JsonSerializerOptions.Converters.Add(
+           new JsonStringEnumConverter());
      });
 
             // Swagger
