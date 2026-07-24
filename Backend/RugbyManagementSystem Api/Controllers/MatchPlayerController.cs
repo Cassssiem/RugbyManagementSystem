@@ -26,7 +26,7 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpGet("players/{playerId:guid}/matches/{matchId:int}")]
-        public async Task<ActionResult<MatchPLayerDTO>> GetPlayerMatch(Guid playerId, int matchId)
+        public async Task<ActionResult<GetMatchPLayerDTO>> GetPlayerMatch(Guid playerId, int matchId)
         {
             var playerMatch = await _matchPlayerServices.GetPlayerMatchAsync(playerId, matchId);
             if (playerMatch == null)
@@ -35,22 +35,21 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpGet("matches/{matchId:int}/players")]
-        public async Task<ActionResult<GetMatchPLayerDTO>> GetPlayersByMatch(int matchId)
+        public async Task<IActionResult> GetPlayersByMatch(int matchId)
         {
-            var players = await _matchPlayerServices.GetPlayersByMatchAsync(matchId);
-            return Ok(players);
+            return Ok(await _matchPlayerServices.GetPlayersByMatchAsync(matchId));
         }
 
         [HttpGet("players/{playerId:guid}/matches")]
-        public async Task<ActionResult<GetMatchPLayerDTO>> GetMatchesByPlayer(Guid playerId)
+        public async Task<IActionResult> GetMatchesByPlayer(Guid playerId)
         {
-            var matches = await _matchPlayerServices.GetMatchesByPlayerAsync(playerId);
-            return Ok(matches);
+            return Ok(await _matchPlayerServices.GetMatchesByPlayerAsync(playerId));
         }
+
 
         [HttpPut("matches/{matchId:int}/players/{playerId:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult<GetMatchPLayerDTO>> UpdatePlayerMatchStats(int matchId, Guid playerId, UpdateMatchPlayerDto dto)
+        public async Task<IActionResult> UpdatePlayerMatchStats(int matchId, Guid playerId, UpdateMatchPlayerDto dto)
         {
             if (matchId != dto.MatchId || playerId != dto.PlayerId)
                 return BadRequest("Route parameters do not match the request body.");
@@ -64,19 +63,13 @@ namespace RugbyManagementSystem_Api.Controllers
 
         [HttpDelete("matches/{matchId:int}/players/{playerId:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult<GetMatchPLayerDTO>> RemovePlayerFromMatch(int matchId, Guid playerId)
+        public async Task<IActionResult> RemovePlayerFromMatch(int matchId, Guid playerId)
         {
             var removed = await _matchPlayerServices.RemovePlayerFromMatchAsync(playerId, matchId);
             if (!removed)
                 return NotFound();
 
             return NoContent();
-        }
-        [HttpGet("matches/{matchId:int}/teams/{team}/players")]
-        public async Task<IActionResult> GetPlayersByMatchAndTeam(int matchId, Teams team)
-        {
-            var players = await _matchPlayerServices.GetPlayersByMatchAndTeamAsync(matchId, team);
-            return Ok(players);
         }
     }
 }

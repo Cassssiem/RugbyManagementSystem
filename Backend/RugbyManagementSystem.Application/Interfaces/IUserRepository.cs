@@ -10,7 +10,7 @@ namespace RugbyManagementSystem.Application.Interfaces
     {
         Task<List<GetUserDTOs>> GetAllUsersAsync();
         Task<GetUserDTOs?> GetUserByIdAsync(Guid Id);
-        Task<UserDetails> CreateUserAsync(UserDetails user);
+        Task<CreateUserDTOs> CreateUserAsync(CreateUserDTOs user);
         Task<UserDetails?> UpdateUserAsync(UserDetails user);
         Task<UserDetails?> DeleteUserAsync(Guid Id);
         Task<UserDetails?> GetByUsernameAsync(string username);

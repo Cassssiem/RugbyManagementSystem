@@ -9,7 +9,7 @@ namespace RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs
         public int MatchId { get; set; }
         public string Opponent { get; set; }
         public DateTime Date { get; set; }
-        public Teams Team { get; set; }
+        public Teams Team { get; set; }   // add this
         public PlayerPosition Position { get; set; }
         public int Tries { get; set; }
         public int Conversions { get; set; }

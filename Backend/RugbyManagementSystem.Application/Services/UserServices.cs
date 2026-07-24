@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RugbyManagementSystem.Application.DTOs.UserDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
+using RugbyManagementSystem.Domain.Enums;
 using System.Numerics;
 
 namespace RugbyManagementSystem.Application.Services
@@ -15,24 +16,31 @@ namespace RugbyManagementSystem.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<UserDetails> CreateUserAsync(UserDetails User)
+        public async Task<CreateUserDTOs> CreateUserAsync(CreateUserDTOs User)
         {
-
             if (string.IsNullOrWhiteSpace(User.Username))
-                throw new ArgumentException("Please enter a player name.");
+                throw new ArgumentException("Please enter a username.");
 
             if (string.IsNullOrWhiteSpace(User.Password))
                 throw new ArgumentException("Please enter a password");
 
-            var newUser = new UserDetails
+            var existing = await _userRepository.GetByUsernameAsync(User.Username);
+            if (existing != null)
+                throw new ArgumentException("That username is already taken.");
+
+            var newUser = new CreateUserDTOs
             {
                 Username = User.Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(User.Password),
-                Role = User.Role,
             };
-            await _userRepository.CreateUserAsync(newUser);
-            return newUser;
 
+            await _userRepository.CreateUserAsync(newUser);
+
+            return new CreateUserDTOs
+            {
+                Username = newUser.Username,
+                Password = null,   // never send this back
+            };
         }
 
         public async Task<List<GetUserDTOs>> GetAllUsersAsync()

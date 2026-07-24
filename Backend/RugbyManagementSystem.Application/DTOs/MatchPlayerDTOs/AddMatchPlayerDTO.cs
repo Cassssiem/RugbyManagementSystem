@@ -4,7 +4,6 @@ namespace RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs
 {
     public class AddMatchPlayerDTO
     {
-        public Teams Team { get; set; }
         public PlayerPosition Position { get; set; }
         public int Tries { get; set; }
         public int Conversions { get; set; }

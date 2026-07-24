@@ -10,7 +10,6 @@ namespace RugbyManagementSystem.Domain.Entities
         public int MatchId { get; set; }
         public MatchDetails Match { get; set; }
 
-        public Teams Team { get; set; }
         public PlayerPosition Position { get; set; }
 
         public int Tries { get; set; }

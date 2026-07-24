@@ -12,6 +12,6 @@ namespace RugbyManagementSystem.Application.Interfaces
         Task<List<MatchPlayer>> GetPlayersByMatchAsync(int matchId);
         Task<List<MatchPlayer>> GetMatchesByPlayerAsync(Guid playerId);
         Task<List<MatchPlayer>> GetAllByPlayerIdAsync(Guid playerId);
-        Task<List<MatchPlayer>> GetPlayersByMatchAndTeamAsync(int matchId, Teams team);
-            }
+        Task<List<MatchPlayer>> GetPlayersByTeamAsync(Teams team);
+    }
 }

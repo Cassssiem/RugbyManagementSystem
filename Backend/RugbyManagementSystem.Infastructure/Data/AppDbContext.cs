@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
-using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RugbyManagementSystem.Infastructure.Data
 {
@@ -13,6 +8,7 @@ namespace RugbyManagementSystem.Infastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
         public DbSet<PlayerDetails> Players { get; set; }
         public DbSet<MatchDetails> Matches { get; set; }
         public DbSet<UserDetails> Users { get; set; }
@@ -22,37 +18,17 @@ namespace RugbyManagementSystem.Infastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Composite Primary Key for MatchPlayer
-            modelBuilder.Entity<MatchPlayer>()
-                .HasKey(mp => new { mp.PlayerId, mp.MatchId });
-
-            modelBuilder.Entity<MatchDetails>()
-                .HasKey(p => p.Id);
-
             modelBuilder.Entity<PlayerDetails>()
                 .Property(p => p.Position)
                 .HasConversion<string>();
 
-            // Player -> MatchPlayer
-            modelBuilder.Entity<MatchPlayer>()
-                .HasOne(mp => mp.Player)
-                .WithMany(p => p.MatchPlayers)
-                .HasForeignKey(mp => mp.PlayerId)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MatchDetails>()
+                .Property(m => m.Team)
+                .HasConversion<string>();
 
-            // Match -> MatchPlayer
+            // Composite Primary Key for MatchPlayer
             modelBuilder.Entity<MatchPlayer>()
-                .HasOne(mp => mp.Match)
-                .WithMany(m => m.MatchPlayers)
-                .HasForeignKey(mp => mp.MatchId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<MatchPlayer>()
-    .HasKey(mp => new { mp.PlayerId, mp.MatchId });
-
-            modelBuilder.Entity<MatchPlayer>()
-                .Property(mp => mp.Team)
-                .HasConversion<string>();   // new
+                .HasKey(mp => new { mp.PlayerId, mp.MatchId });
 
             modelBuilder.Entity<MatchPlayer>()
                 .HasOne(mp => mp.Player)
@@ -65,8 +41,6 @@ namespace RugbyManagementSystem.Infastructure.Data
                 .WithMany(m => m.MatchPlayers)
                 .HasForeignKey(mp => mp.MatchId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            // entire TeamPlayer block removed
         }
     }
 }

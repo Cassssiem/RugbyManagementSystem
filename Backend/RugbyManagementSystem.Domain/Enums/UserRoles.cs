@@ -6,7 +6,7 @@ namespace RugbyManagementSystem.Domain.Enums
 {
     public enum UserRoles
     {
-        user,
+        User,
         Admin
     }
 }

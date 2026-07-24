@@ -1,12 +1,5 @@
-﻿using Microsoft.Identity.Client.Utils;
-using RugbyManagementSystem.Application.DTOs.MatchDTOs;
+﻿using RugbyManagementSystem.Application.DTOs.MatchDTOs;
 using RugbyManagementSystem.Application.Interfaces;
-using RugbyManagementSystem.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace RugbyManagementSystem.Application.Services
 {
@@ -19,67 +12,50 @@ namespace RugbyManagementSystem.Application.Services
             _matchRepository = matchRepository;
         }
 
-        public async Task<CreateMatchDTOs> CreateMatchAsync(CreateMatchDTOs match)
-        {
-            var newMatchDetails = new MatchDetails
-            {
-                Opponent = match.Opponent,
-                Date = match.Date,
-                Location = match.Location,
-                Titans = match.Titans,
-                OpponentScore = match.OpponentScore
-            };
-
-            var createdMatch = await _matchRepository.CreateMatchAsync(newMatchDetails);
-
-            return new CreateMatchDTOs
-            {
-                Opponent = createdMatch.Opponent,
-                Date = createdMatch.Date,
-                Location = createdMatch.Location,
-                Titans = createdMatch.Titans,
-                OpponentScore = createdMatch.OpponentScore
-            };
-        }
-
-        public async Task<IEnumerable<MatchDetails>> GetAllAsync()
+        public async Task<List<GetMatchDTO>> GetAllMatchesAsync()
         {
             return await _matchRepository.GetAllAsync();
         }
 
-        public async Task<MatchDetails?> GetMatchByIdAsync(int Id)
+        public async Task<GetMatchDTO?> GetMatchByIdAsync(int id)
         {
-            var match = await _matchRepository.GetMatchByIdAsync(Id);
-            return match;
+            return await _matchRepository.GetMatchByIdAsync(id);
         }
 
-        public async Task<UpdateMatchDTOs?> UpdateMatchAsync(UpdateMatchDTOs dto)
+        public async Task<GetMatchDTO> CreateMatchAsync(CreateMatchDTOs match)
         {
-            var match = await _matchRepository.GetMatchByIdAsync(dto.Id);
+            var newMatch = new GetMatchDTO
+            {
+                Opponent = match.Opponent,
+                Date = match.Date,
+                Location = match.Location,
+                Team = match.Team,
+                Titans = match.Titans,
+                OpponentScore = match.OpponentScore
+            };
 
-            if (match == null)
+            return await _matchRepository.CreateMatchAsync(newMatch);
+        }
+
+        public async Task<GetMatchDTO?> UpdateMatchAsync(int id, UpdateMatchDTOs match)
+        {
+            var existing = await _matchRepository.GetMatchByIdAsync(id);
+            if (existing == null)
                 return null;
 
+            existing.Opponent = match.Opponent;
+            existing.Date = match.Date;
+            existing.Location = match.Location;
+            existing.Team = match.Team;
+            existing.Titans = match.Titans;
+            existing.OpponentScore = match.OpponentScore;
 
-            match.Opponent = dto.Opponent;
-            match.Date = dto.Date;
-            match.Location = dto.Location;
-            match.Titans = dto.Titans;
-            match.OpponentScore = dto.OpponentScore;
+            return await _matchRepository.UpdateMatchAsync(existing);
+        }
 
-
-            var updatedMatch = await _matchRepository.UpdateMatchAsync(match);
-
-
-            return new UpdateMatchDTOs
-            {
-                Id = updatedMatch.Id,
-                Opponent = updatedMatch.Opponent,
-                Date = updatedMatch.Date,
-                Location = updatedMatch.Location,
-                Titans = updatedMatch.Titans,
-                OpponentScore = updatedMatch.OpponentScore
-            };
+        public async Task<GetMatchDTO?> DeleteMatchAsync(int id)
+        {
+            return await _matchRepository.DeleteMatchAsync(id);
         }
     }
 }

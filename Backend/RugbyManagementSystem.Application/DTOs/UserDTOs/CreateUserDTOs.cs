@@ -1,8 +1,4 @@
-﻿using RugbyManagementSystem.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RugbyManagementSystem.Application.DTOs.UserDTOs
 {
@@ -11,9 +7,9 @@ namespace RugbyManagementSystem.Application.DTOs.UserDTOs
         [Required(ErrorMessage = "Username is required.")]
         [StringLength(50, MinimumLength = 2)]
         public string Username { get; set; }
+
         [Required(ErrorMessage = "Please enter a password")]
-        [Range(2,20)]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters.")]
         public string Password { get; set; }
-        public UserRoles Role { get; set; } 
     }
 }

@@ -24,16 +24,11 @@ namespace RugbyManagementSystem_Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult<UserDetails>> CreateUserAsync(UserDetails user)
+        [HttpPost]
+        public async Task<ActionResult<CreateUserDTOs>> CreateUserAsync(CreateUserDTOs user)
         {
             var newUser = await _userServices.CreateUserAsync(user);
-
-            return CreatedAtAction(
-                nameof(GetUserById),
-                new { Id = newUser.Id },
-                newUser
-            );
+            return Ok(newUser);
         }
 
         [HttpGet]

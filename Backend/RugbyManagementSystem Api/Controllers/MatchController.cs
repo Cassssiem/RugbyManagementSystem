@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RugbyManagementSystem.Application.DTOs.MatchDTOs;
 using RugbyManagementSystem.Application.Interfaces;
-using RugbyManagementSystem.Application.Services;
-using RugbyManagementSystem.Domain.Entities;
-using RugbyManagementSystem.Domain.Enums;
 
 namespace RugbyManagementSystem_Api.Controllers
 {
@@ -20,46 +16,47 @@ namespace RugbyManagementSystem_Api.Controllers
             _matchServices = matchServices;
         }
 
-        [HttpPost]
-        [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult<CreateMatchDTOs>> CreateMatchAsync(CreateMatchDTOs matchDetails)
-        {
-            var newMatch = await _matchServices.CreateMatchAsync(matchDetails);
-
-            return Ok(newMatch);
-        }
-
         [HttpGet]
-        public async Task<ActionResult<CreateMatchDTOs>> GetAllAsync()
+        public async Task<ActionResult<List<GetMatchDTO>>> GetAllMatches()
         {
-            var match = await _matchServices.GetAllAsync();
-
-            return Ok(match);
+            return Ok(await _matchServices.GetAllMatchesAsync());
         }
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<CreateMatchDTOs>> GetMatchById(int Id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<GetMatchDTO>> GetMatchById(int id)
         {
-            var match = await _matchServices.GetMatchByIdAsync(Id);
-
+            var match = await _matchServices.GetMatchByIdAsync(id);
             if (match == null)
                 return NotFound();
-
             return Ok(match);
         }
 
-        [HttpPut]
-        [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult<CreateMatchDTOs>> UpdateMatch(UpdateMatchDTOs dto)
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<GetMatchDTO>> CreateMatch(CreateMatchDTOs match)
         {
-            var match = await _matchServices.UpdateMatchAsync(dto);
-
-            if (match == null)
-                return NotFound();
-
-            return Ok(match);
+            var newMatch = await _matchServices.CreateMatchAsync(match);
+            return CreatedAtAction(nameof(GetMatchById), new { id = newMatch.Id }, newMatch);
         }
 
+        [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<GetMatchDTO>> UpdateMatch(int id, UpdateMatchDTOs match)
+        {
+            var updated = await _matchServices.UpdateMatchAsync(id, match);
+            if (updated == null)
+                return NotFound();
+            return Ok(updated);
+        }
 
+        [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteMatch(int id)
+        {
+            var result = await _matchServices.DeleteMatchAsync(id);
+            if (result == null)
+                return NotFound();
+            return Ok("Match was deleted");
+        }
     }
 }

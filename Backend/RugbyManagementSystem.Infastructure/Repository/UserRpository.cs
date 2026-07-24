@@ -1,8 +1,9 @@
-﻿using RugbyManagementSystem.Application.DTOs.UserDTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using RugbyManagementSystem.Application.DTOs.UserDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Domain.Entities;
+using RugbyManagementSystem.Domain.Enums;
 using RugbyManagementSystem.Infastructure.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace RugbyManagementSystem.Infastructure.Repository
 {
@@ -14,14 +15,19 @@ namespace RugbyManagementSystem.Infastructure.Repository
             _context = context;
         }
 
-        public async Task<UserDetails> CreateUserAsync(UserDetails user)
+        public async Task<CreateUserDTOs> CreateUserAsync(CreateUserDTOs user)
         {
-            await _context.AddAsync(user);
+            var entity = new UserDetails
+            {
+                Username = user.Username,
+                Password = user.Password,       // already hashed by the service
+                Role = UserRoles.User            // forced here — the only place Role gets set for self-registration
+            };
 
+            await _context.Users.AddAsync(entity);
             await _context.SaveChangesAsync();
 
             return user;
-
         }
 
         public async Task<List<GetUserDTOs>> GetAllUsersAsync()
