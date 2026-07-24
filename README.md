@@ -66,7 +66,7 @@ This project was developed using **ASP.NET Core Web API (C#)** for the backend a
 
 ### Frontend
 - To be built separately, consuming this backend's REST API
-- (Recommended stack: React + TypeScript, React Router, Axios)
+- React + TypeScript, React Router, Axios
 
 ---
 
