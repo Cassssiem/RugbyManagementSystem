@@ -23,6 +23,8 @@ namespace RugbyManagementSystem.Application.DTOs.PlayerDTOs
 
         public int Tries { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         public int Conversions { get; set; }
     }
 }

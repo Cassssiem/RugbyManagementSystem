@@ -101,12 +101,14 @@ namespace RugbyManagementSystem_Api
             builder.Services.AddScoped<IMatchServices, MatchServices>();
             builder.Services.AddScoped<IMatchPlayerServices, MatchPlayerService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<ISponsorInquiryServices, SponsorInquiryServices>();
 
             // Repositories
             builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
             builder.Services.AddScoped<IMatchRepository, MatchRepository>();
             builder.Services.AddScoped<IMatchPlayerRepository, MatchPlayerRepository>();
             builder.Services.AddScoped<IUserRepository, UserRpository>();
+            builder.Services.AddScoped<ISponsorInquiryRepository, SponsorInquiryRepository>();
 
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
@@ -142,7 +144,7 @@ namespace RugbyManagementSystem_Api
                 }
             }
 
-
+            app.UseStaticFiles(); // add near app.UseHttpsRedirection()
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

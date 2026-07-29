@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RugbyManagementSystem.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+024e4e27c9b01b68b0999ec9edc1949da00396b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5ae59aeaf36caf5f830cc59e10e47545c0e8a344")]
 [assembly: System.Reflection.AssemblyProductAttribute("RugbyManagementSystem.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RugbyManagementSystem.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

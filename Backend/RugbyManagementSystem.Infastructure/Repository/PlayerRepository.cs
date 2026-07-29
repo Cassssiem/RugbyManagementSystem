@@ -25,6 +25,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
             NickName = p.NickName,
             Age = p.Age,
             Position = p.Position,
+            ImageUrl = p.ImageUrl,
             MatchesPlayed = p.MatchesPlayed,
             Tries = p.Tries,
             Conversions = p.Conversions
@@ -55,6 +56,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
                 NickName = player.NickName,
                 Age = player.Age,
                 Position = player.Position,
+                ImageUrl = player.ImageUrl,
                 MatchesPlayed = 0,
                 Tries = 0,
                 Conversions = 0
@@ -77,6 +79,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
             entity.NickName = player.NickName;
             entity.Age = player.Age;
             entity.Position = player.Position;
+            entity.ImageUrl = player.ImageUrl;
             entity.MatchesPlayed = player.MatchesPlayed;
             entity.Tries = player.Tries;
             entity.Conversions = player.Conversions;

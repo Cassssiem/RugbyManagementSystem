@@ -22,6 +22,48 @@ namespace RugbyManagementSystem.Infastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("PlayerDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Conversions")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MatchesPlayed")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NickName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Tries")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Players");
+                });
+
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.MatchDetails", b =>
                 {
                     b.Property<int>("Id")
@@ -80,43 +122,39 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.ToTable("MatchPlayers");
                 });
 
-            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.PlayerDetails", b =>
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.SponsorInquiry", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("Conversions")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MatchesPlayed")
-                        .HasColumnType("int");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NickName")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Reviewed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Tries")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Players");
+                    b.ToTable("SponsorInquiries");
                 });
 
             modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.UserDetails", b =>
@@ -149,7 +187,7 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RugbyManagementSystem.Domain.Entities.PlayerDetails", "Player")
+                    b.HasOne("PlayerDetails", "Player")
                         .WithMany("MatchPlayers")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -160,12 +198,12 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.MatchDetails", b =>
+            modelBuilder.Entity("PlayerDetails", b =>
                 {
                     b.Navigation("MatchPlayers");
                 });
 
-            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.PlayerDetails", b =>
+            modelBuilder.Entity("RugbyManagementSystem.Domain.Entities.MatchDetails", b =>
                 {
                     b.Navigation("MatchPlayers");
                 });

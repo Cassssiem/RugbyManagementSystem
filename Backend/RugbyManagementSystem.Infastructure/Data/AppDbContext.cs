@@ -13,6 +13,7 @@ namespace RugbyManagementSystem.Infastructure.Data
         public DbSet<MatchDetails> Matches { get; set; }
         public DbSet<UserDetails> Users { get; set; }
         public DbSet<MatchPlayer> MatchPlayers { get; set; }
+        public DbSet<SponsorInquiry> SponsorInquiries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

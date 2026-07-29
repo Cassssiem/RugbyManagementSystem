@@ -31,4 +31,8 @@
     <ProjectReference Include="..\RugbyManagementSystem.Infastructure\RugbyManagementSystem.Infastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\players\" />
+  </ItemGroup>
+
 </Project>

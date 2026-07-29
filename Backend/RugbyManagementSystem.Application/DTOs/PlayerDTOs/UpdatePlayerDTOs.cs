@@ -28,6 +28,8 @@ namespace RugbyManagementSystem.Application.DTOs.UpdatePlayer
         [Required]
         public PlayerPosition Position { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         [Range(0, int.MaxValue)]
         public int MatchesPlayed { get; set; }
 
