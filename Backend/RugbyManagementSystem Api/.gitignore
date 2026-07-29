@@ -72,14 +72,4 @@ node_modules/
 
 # Temporary files
 *.tmp
-*.temp
-*.cache
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Backup files
-*.bak
-*.old
-*.orig
+ 
