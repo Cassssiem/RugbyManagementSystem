@@ -1,0 +1,124 @@
+.player-detail-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+
+.player-detail-back {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: #404943;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.player-detail-back:hover {
+  color: #002819;
+}
+
+.player-detail-card {
+  background: #fff;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.player-detail-name {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #002819;
+}
+
+.player-detail-nick {
+  font-size: 0.85rem;
+  color: #717973;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.player-detail-meta {
+  font-size: 0.8rem;
+  color: #404943;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.player-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+  border-top: 1px solid #c0c9c1;
+  padding-top: 1.5rem;
+}
+
+.player-detail-stat-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #002819;
+}
+
+.player-detail-stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #717973;
+}
+
+.player-detail-section-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #002819;
+  margin-bottom: 1rem;
+}
+
+.history-row {
+  background: #fff;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.history-date {
+  font-size: 0.7rem;
+  color: #717973;
+}
+
+.history-opponent {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.history-position {
+  font-size: 0.7rem;
+  color: #404943;
+}
+
+.history-stats {
+  font-size: 0.75rem;
+  text-align: right;
+}
+
+.player-detail-header {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.player-detail-image {
+  width: 350px;
+  height: 450px;
+}
+
+.player-detail-info {
+  flex: 1;
+}
