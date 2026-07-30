@@ -1,0 +1,205 @@
+.sponsor-page {
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+.sponsor-hero {
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+
+  padding: 80px 8%;
+
+  background:
+    radial-gradient(circle at top left,
+    rgba(255,255,255,0.05),
+    transparent 30%),
+    #003326;
+}
+
+
+/* LEFT SIDE */
+
+.sponsor-content {
+  width: 45%;
+  color: white;
+}
+
+
+.sponsor-content h1 {
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+
+  color: #ffd900;
+}
+
+
+.sponsor-content h1 span {
+  color: #ffd900;
+}
+
+
+.sponsor-content p {
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 520px;
+
+  color: #d8fff3;
+}
+
+
+/* FORM CARD */
+
+.sponsor-card {
+  width: 420px;
+
+  background: #fff;
+
+  padding: 35px 30px;
+
+  border-radius: 6px;
+
+  box-shadow: 
+    0 20px 50px rgba(0,0,0,0.25);
+}
+
+
+.sponsor-card h2 {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 800;
+
+  color: #003326;
+}
+
+
+.subtitle {
+  margin-top: 8px;
+  margin-bottom: 25px;
+
+  color: #555;
+
+  font-size: 15px;
+}
+
+
+
+/* FORM */
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+
+  margin-bottom: 7px;
+
+  color: #222;
+}
+
+
+input,
+textarea {
+
+  width: 100%;
+
+  padding: 13px;
+
+  margin-bottom: 16px;
+
+  border: 1px solid #d5d5d5;
+
+  font-size: 14px;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+
+textarea {
+  height: 95px;
+  resize: none;
+}
+
+
+input:focus,
+textarea:focus {
+  border-color: #003326;
+}
+
+
+
+/* BUTTON */
+
+button {
+
+  margin-top: 2px;
+
+  padding: 16px;
+
+  border: none;
+
+  cursor: pointer;
+
+  background: #857000;
+
+  color: #111;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  transition: 0.3s;
+}
+
+
+button:hover {
+
+  background: #a58d00;
+
+}
+
+
+
+/* RESPONSIVE */
+
+@media(max-width: 900px){
+
+  .sponsor-hero {
+
+    flex-direction: column;
+
+    padding: 50px 25px;
+
+  }
+
+
+  .sponsor-content {
+
+    width: 100%;
+
+    text-align: center;
+
+  }
+
+
+  .sponsor-card {
+
+    width: 100%;
+
+    max-width: 420px;
+
+  }
+
+}

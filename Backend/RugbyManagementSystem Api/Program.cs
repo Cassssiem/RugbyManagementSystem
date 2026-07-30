@@ -21,6 +21,16 @@ namespace RugbyManagementSystem_Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:5173") // your React/Vite URL
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             builder.Services.AddScoped<TokenService>();
 
@@ -143,6 +153,7 @@ namespace RugbyManagementSystem_Api
                     db.SaveChanges();
                 }
             }
+            app.UseCors("AllowFrontend");
 
             app.UseStaticFiles(); // add near app.UseHttpsRedirection()
             app.UseHttpsRedirection();

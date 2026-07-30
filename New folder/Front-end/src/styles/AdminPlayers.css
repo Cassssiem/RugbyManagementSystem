@@ -1,0 +1,101 @@
+.admin-page {
+  padding: 2rem;
+  width: 100%;
+}
+
+.admin-page-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #002819;
+  margin-bottom: 1.5rem;
+}
+
+.admin-form {
+  background: #fff;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.admin-field label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #404943;
+  margin-bottom: 0.25rem;
+}
+
+.admin-field input,
+.admin-field select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  font-size: 0.85rem;
+}
+
+.admin-submit-btn {
+  background: #002819;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.admin-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #c0c9c1;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 0.85rem;
+}
+
+.admin-table th {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #717973;
+}
+
+.admin-row-btn {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  cursor: pointer;
+  margin-right: 0.75rem;
+}
+
+.admin-row-btn.edit { color: #002819; }
+.admin-row-btn.delete { color: #ba1a1a; }
+
+.admin-error {
+  padding: 0.75rem;
+  background: #fdecea;
+  border: 1px solid #ba1a1a;
+  color: #ba1a1a;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 2px;
+}

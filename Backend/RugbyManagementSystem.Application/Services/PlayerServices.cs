@@ -45,6 +45,7 @@ namespace RugbyManagementSystem.Application.Services
                 NickName = player.NickName,
                 Age = player.Age,
                 Position = player.Position,
+                ImageUrl = player.ImageUrl,
                 MatchesPlayed = 0,
                 Tries = 0,
                 Conversions = 0
@@ -65,6 +66,7 @@ namespace RugbyManagementSystem.Application.Services
             existing.Name = player.Name;
             existing.Surname = player.Surname;
             existing.NickName = player.NickName;
+            existing.ImageUrl = player.ImageUrl;
             existing.Age = player.Age;
             existing.Position = player.Position;
             // MatchesPlayed, Tries, Conversion intentionally NOT set here —

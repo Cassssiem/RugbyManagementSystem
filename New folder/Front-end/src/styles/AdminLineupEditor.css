@@ -1,0 +1,141 @@
+.lineup-page {
+  padding: 2rem;
+  width: 100%;
+}
+
+.lineup-header {
+  margin-bottom: 1.5rem;
+}
+
+.lineup-match-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #002819;
+}
+
+.lineup-match-date {
+  font-size: 0.75rem;
+  color: #717973;
+}
+
+.lineup-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 800px) {
+  .lineup-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lineup-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #002819;
+  margin-bottom: 0.75rem;
+}
+
+.lineup-add-form {
+  background: #fff;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.lineup-add-form select,
+.lineup-add-form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.lineup-add-form label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #404943;
+  margin-bottom: 0.25rem;
+}
+
+.lineup-stats-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.lineup-add-btn {
+  width: 100%;
+  background: #002819;
+  color: #fff;
+  border: none;
+  padding: 0.6rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.lineup-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lineup-current-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lineup-current-row {
+  background: #fff;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lineup-current-row-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.lineup-current-row-meta {
+  font-size: 0.7rem;
+  color: #717973;
+}
+
+.lineup-remove-btn {
+  background: none;
+  border: none;
+  color: #ba1a1a;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.lineup-error {
+  padding: 0.75rem;
+  background: #fdecea;
+  border: 1px solid #ba1a1a;
+  color: #ba1a1a;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 2px;
+}
+
+.lineup-back-btn {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: #404943;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
