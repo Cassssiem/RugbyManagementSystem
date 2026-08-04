@@ -13,6 +13,6 @@ namespace RugbyManagementSystem.Application.Interfaces
         Task<GetPlayerDTO?> GetPlayerByIdAsync(Guid playerId);
         Task<GetPlayerDTO> CreatePlayerAsync(CreatePlayerDTOs player);
         Task<GetPlayerDTO?> UpdatePlayerAsync(Guid playerId, UpdatePlayerDTOs player);
-        Task<GetPlayerDTO?> DeletePlayerAsync(Guid playerId);
+        Task<bool> DeletePlayerAsync(Guid playerId);
     }
 }

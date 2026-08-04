@@ -131,7 +131,12 @@ export default function App() {
             <HomeView matches={matches} loading={loadingMatches} onNavigate={setView} onSelectMatch={handleSelectMatch} />
           )}
           {view === 'matches' && (
-            <MatchesView matches={matches} loading={loadingMatches} onSelectMatch={handleSelectMatch} />
+            <MatchesView
+              matches={matches}
+              loading={loadingMatches}
+              onSelectMatch={handleSelectMatch}
+              onNavigate={setView}
+            />
           )}
           {view === 'players' && (
             <ActiveRoster players={players} loading={loadingPlayers} onSelectPlayer={handleSelectPlayer} />

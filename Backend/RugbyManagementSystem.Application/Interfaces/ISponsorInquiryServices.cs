@@ -1,6 +1,6 @@
-﻿using System;
+﻿using RugbyManagementSystem.Application.DTOs.SponsorDTOs;
+using System;
 using System.Collections.Generic;
-using RugbyManagementSystem.Application.DTOs.SponsorDTOs;
 
 
 namespace RugbyManagementSystem.Application.Interfaces

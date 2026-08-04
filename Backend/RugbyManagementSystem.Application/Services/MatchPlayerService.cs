@@ -45,6 +45,7 @@ namespace RugbyManagementSystem.Application.Services
             Date = mp.Match.Date,
             Team = mp.Match.Team,
             Position = mp.Position,
+            JerseyNumber = mp.JerseyNumber,   // ← add this
             Tries = mp.Tries,
             Conversions = mp.Conversions
         };
@@ -71,6 +72,7 @@ namespace RugbyManagementSystem.Application.Services
                 PlayerId = playerId,
                 MatchId = matchId,
                 Position = dto.Position,
+                JerseyNumber = dto.JerseyNumber,   // ← add this
                 Tries = dto.Tries,
                 Conversions = dto.Conversions
             };

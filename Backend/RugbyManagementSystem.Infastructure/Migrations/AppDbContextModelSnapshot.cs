@@ -109,7 +109,13 @@ namespace RugbyManagementSystem.Infastructure.Migrations
                     b.Property<int>("Conversions")
                         .HasColumnType("int");
 
+                    b.Property<int>("JerseyNumber")
+                        .HasColumnType("int");
+
                     b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Team")
                         .HasColumnType("int");
 
                     b.Property<int>("Tries")

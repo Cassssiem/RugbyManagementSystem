@@ -2,7 +2,7 @@ import React from 'react';
 import { TEAM_LABELS } from '../types';
 import '../styles/MatchesView.css';
 
-export const MatchesView = ({ matches, loading, onSelectMatch }) => {
+export const MatchesView = ({ matches, loading, onSelectMatch, onNavigate }) => {
   return (
     <div className="matches-page">
       <h1 className="matches-title">Match Center</h1>
@@ -14,7 +14,14 @@ export const MatchesView = ({ matches, loading, onSelectMatch }) => {
 
       <div className="matches-list">
         {matches.map((match) => (
-          <button key={match.id} className="match-row" onClick={() => onSelectMatch(match)}>
+          <button
+            key={match.id}
+            className="match-row"
+            onClick={() => {
+              onSelectMatch(match);
+              onNavigate('lineup-viewer');
+            }}
+          >
             <div>
               <p className="match-row-date">
                 {new Date(match.date).toLocaleDateString('en-US', {

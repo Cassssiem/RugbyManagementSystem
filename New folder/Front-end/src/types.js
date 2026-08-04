@@ -6,6 +6,19 @@ export const TEAM_LABELS = {
   ThirdTeam: "Third Team",
 };
 
+export const LEAGUE_OPPONENTS = [
+  "Rocklands",
+  "Retreat",
+  "Masiphumelele",
+  "Pininsula",
+  "Retreat",
+  "khayaelitsha",
+  "Blue Jets",
+  "Imiqhayi",
+  "Lagunya",
+  "Young Wesleys",
+];
+
 export const POSITIONS = [
   "Prop",
   "Hooker",

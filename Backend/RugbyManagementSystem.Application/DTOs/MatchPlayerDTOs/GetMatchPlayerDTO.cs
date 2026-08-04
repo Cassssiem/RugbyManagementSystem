@@ -1,4 +1,5 @@
 ﻿using RugbyManagementSystem.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs
 {
@@ -11,6 +12,8 @@ namespace RugbyManagementSystem.Application.DTOs.MatchPlayerDTOs
         public DateTime Date { get; set; }
         public Teams Team { get; set; }   // add this
         public PlayerPosition Position { get; set; }
+        public int JerseyNumber { get; set; }
+
         public int Tries { get; set; }
         public int Conversions { get; set; }
     }

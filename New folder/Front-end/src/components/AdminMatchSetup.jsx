@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TEAMS, TEAM_LABELS, EMPTY_MATCH_FORM } from '../types';
+import { TEAMS, TEAM_LABELS, LEAGUE_OPPONENTS, EMPTY_MATCH_FORM } from '../types';
 import '../styles/AdminPlayers.css';
 
 export const AdminMatchSetup = ({ onAddMatch, onNavigate }) => {
@@ -36,30 +36,41 @@ export const AdminMatchSetup = ({ onAddMatch, onNavigate }) => {
       <form className="admin-form" onSubmit={handleSubmit}>
         <div className="admin-field">
           <label>Opponent</label>
-          <input name="opponent" value={form.opponent} onChange={handleChange} required />
+          <select name="opponent" value={form.opponent} onChange={handleChange} required>
+            <option value="">Select an opponent...</option>
+            {LEAGUE_OPPONENTS.map((team) => (
+              <option key={team} value={team}>{team}</option>
+            ))}
+          </select>
         </div>
+
         <div className="admin-field">
           <label>Date & Time</label>
           <input type="datetime-local" name="date" value={form.date} onChange={handleChange} required />
         </div>
+
         <div className="admin-field">
           <label>Location</label>
           <input name="location" value={form.location} onChange={handleChange} required />
         </div>
+
         <div className="admin-field">
           <label>Team</label>
           <select name="team" value={form.team} onChange={handleChange}>
             {TEAMS.map((t) => <option key={t} value={t}>{TEAM_LABELS[t]}</option>)}
           </select>
         </div>
+
         <div className="admin-field">
           <label>Titans Score</label>
           <input type="number" name="titans" value={form.titans} onChange={handleChange} />
         </div>
+
         <div className="admin-field">
           <label>Opponent Score</label>
           <input type="number" name="opponentScore" value={form.opponentScore} onChange={handleChange} />
         </div>
+
         <button type="submit" className="admin-submit-btn" disabled={saving}>
           {saving ? 'Saving...' : 'Create Match'}
         </button>

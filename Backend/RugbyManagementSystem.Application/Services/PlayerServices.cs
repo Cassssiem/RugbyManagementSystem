@@ -1,21 +1,18 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.Json;
-using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
+﻿using RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.PlayerDTOs;
 using RugbyManagementSystem.Application.DTOs.UpdatePlayer;
 using RugbyManagementSystem.Application.Interfaces;
-using RugbyManagementSystem.Domain.Entities;
 
 namespace RugbyManagementSystem.Application.Services
 {
-        public class PlayerServices : IPlayerServices
-        {
-            private readonly IPlayerRepository _playerRepository;
+    public class PlayerServices : IPlayerServices
+    {
+        private readonly IPlayerRepository _playerRepository;
+
         public PlayerServices(IPlayerRepository playerRepository)
-            {
+        {
             _playerRepository = playerRepository;
-            }
+        }
 
         public async Task<List<GetPlayerDTO>> GetAllPlayersAsync()
         {
@@ -36,7 +33,8 @@ namespace RugbyManagementSystem.Application.Services
                 throw new ArgumentException("Please enter a player name.");
 
             if (player.Age < 18)
-                throw new ArgumentException("Player has to be over 18 to be registered as a senior.");
+                throw new ArgumentException(
+                    "Player has to be over 18 to be registered as a senior.");
 
             var newPlayer = new GetPlayerDTO
             {
@@ -54,12 +52,15 @@ namespace RugbyManagementSystem.Application.Services
             return await _playerRepository.CreatePlayerAsync(newPlayer);
         }
 
-        public async Task<GetPlayerDTO?> UpdatePlayerAsync(Guid playerId, UpdatePlayerDTOs player)
+        public async Task<GetPlayerDTO?> UpdatePlayerAsync(
+            Guid playerId,
+            UpdatePlayerDTOs player)
         {
             if (playerId == Guid.Empty)
                 throw new ArgumentException("Please enter a valid player Id.");
 
             var existing = await _playerRepository.GetPlayerByIdAsync(playerId);
+
             if (existing == null)
                 return null;
 
@@ -69,20 +70,27 @@ namespace RugbyManagementSystem.Application.Services
             existing.ImageUrl = player.ImageUrl;
             existing.Age = player.Age;
             existing.Position = player.Position;
-            // MatchesPlayed, Tries, Conversion intentionally NOT set here —
-            // they're derived from MatchPlayer records via RecalculatePlayerStatsAsync
+
+            // MatchesPlayed, Tries and Conversions are intentionally
+            // not changed here because they are calculated from
+            // MatchPlayer records.
 
             return await _playerRepository.UpdatePlayerAsync(existing);
         }
 
-        public async Task<GetPlayerDTO?> DeletePlayerAsync(Guid playerId)
+        public async Task<bool> DeletePlayerAsync(Guid playerId)
         {
             if (playerId == Guid.Empty)
                 throw new ArgumentException("Please enter a valid player Id.");
 
-            return await _playerRepository.DeletePlayerAsync(playerId);
+            var player = await _playerRepository.GetPlayerByIdAsync(playerId);
+
+            if (player == null)
+                return false;
+
+            await _playerRepository.DeletePlayerAsync(playerId);
+
+            return true;
         }
-
-
     }
 }

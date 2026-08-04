@@ -1,5 +1,6 @@
 import { API_BASE_URL, getAuthHeaders } from "./config";
 
+
 async function handleResponse(res) {
   if (!res.ok) {
     const body = await res.json().catch(() => null);

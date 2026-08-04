@@ -35,14 +35,14 @@
 .admin-field select {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #c0c9c1;
+  border: 1px solid #bac5bc;
   border-radius: 2px;
   font-size: 0.85rem;
 }
 
 .admin-submit-btn {
   background: #002819;
-  color: #fff;
+  color: #fffdfd;
   border: none;
   padding: 0.6rem 1.25rem;
   font-weight: 700;
@@ -61,22 +61,22 @@
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
-  border: 1px solid #c0c9c1;
+  background: #fafafa;
+  border: 1px solid #18af2a;
 }
 
 .admin-table th,
 .admin-table td {
   text-align: left;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #000000;
   font-size: 0.85rem;
 }
 
 .admin-table th {
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: #717973;
+  color: #1d8d39;
 }
 
 .admin-row-btn {
@@ -92,7 +92,7 @@
 
 .admin-error {
   padding: 0.75rem;
-  background: #fdecea;
+  background: #e0dcdc;
   border: 1px solid #ba1a1a;
   color: #ba1a1a;
   font-size: 0.75rem;

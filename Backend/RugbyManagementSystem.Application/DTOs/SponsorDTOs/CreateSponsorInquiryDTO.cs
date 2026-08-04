@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RugbyManagementSystem.Application.DTOs.SponsorDTOs
 {
-    public  class CreateSponsorInquiryDTO
+    public class CreateSponsorInquiryDTO
     {
         [Required, StringLength(100)]
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace RugbyManagementSystem.Application.DTOs.SponsorDTOs
         [Phone]
         public string Phone { get; set; }
 
-        [Required, StringLength (100)]
+        [Required, StringLength(100)]
         public string Message { get; set; }
     }
 }

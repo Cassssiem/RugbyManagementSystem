@@ -88,16 +88,19 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return ToDto(entity);
         }
 
-        public async Task<GetPlayerDTO?> DeletePlayerAsync(Guid id)
+        public async Task DeletePlayerAsync(Guid playerId)
         {
-            var entity = await _context.Players.FindAsync(id);
-            if (entity == null)
-                return null;
+            var player = await _context.Players
+                .FirstOrDefaultAsync(p => p.Id == playerId);
 
-            _context.Players.Remove(entity);
+            if (player == null)
+                return;
+
+            _context.Players.Remove(player);
+
             await _context.SaveChangesAsync();
-            return ToDto(entity);
         }
+
 
 
     }
