@@ -54,9 +54,8 @@ namespace RugbyManagementSystem_Api.Controllers
         public async Task<ActionResult> DeleteMatch(int id)
         {
             var result = await _matchServices.DeleteMatchAsync(id);
-            if (result == null)
-                return NotFound();
-            return Ok("Match was deleted");
+            if (result == null) return NotFound();
+            return Ok(new { message = "Match was deleted" });
         }
     }
 }

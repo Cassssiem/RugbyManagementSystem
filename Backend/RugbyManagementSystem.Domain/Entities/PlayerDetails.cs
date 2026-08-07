@@ -13,5 +13,6 @@ public class PlayerDetails
     public int Tries { get; set; }
     public int Conversions { get; set; }
     public string? ImageUrl { get; set; }   // new — nullable, since not every player needs one
+    public string? Bio { get; set; }
     public ICollection<MatchPlayer> MatchPlayers { get; set; }
 }

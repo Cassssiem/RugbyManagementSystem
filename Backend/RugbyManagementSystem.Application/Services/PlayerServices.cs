@@ -46,7 +46,8 @@ namespace RugbyManagementSystem.Application.Services
                 ImageUrl = player.ImageUrl,
                 MatchesPlayed = 0,
                 Tries = 0,
-                Conversions = 0
+                Conversions = 0,
+                Bio = player.Bio,
             };
 
             return await _playerRepository.CreatePlayerAsync(newPlayer);
@@ -70,6 +71,8 @@ namespace RugbyManagementSystem.Application.Services
             existing.ImageUrl = player.ImageUrl;
             existing.Age = player.Age;
             existing.Position = player.Position;
+            existing.ImageUrl = player.ImageUrl;
+            existing.Bio = player.Bio;
 
             // MatchesPlayed, Tries and Conversions are intentionally
             // not changed here because they are calculated from

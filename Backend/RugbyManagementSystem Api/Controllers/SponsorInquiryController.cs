@@ -20,7 +20,7 @@ namespace RugbyManagementSystem_Api.Controllers
         public async Task<ActionResult> Submit(CreateSponsorInquiryDTO dto)
         {
             await _services.CreateAsync(dto);
-            return Ok("Thank you — we'll be in touch.");
+            return Ok(new { message = "Thank you — we'll be in touch." });
         }
 
         [HttpGet]

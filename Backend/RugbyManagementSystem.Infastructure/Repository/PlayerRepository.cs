@@ -28,7 +28,8 @@ namespace RugbyManagementSystem.Infastructure.Repository
             ImageUrl = p.ImageUrl,
             MatchesPlayed = p.MatchesPlayed,
             Tries = p.Tries,
-            Conversions = p.Conversions
+            Conversions = p.Conversions,
+            Bio = p.Bio
         };
         public async Task<List<GetPlayerDTO>> GetAllAsync()
         {
@@ -59,7 +60,8 @@ namespace RugbyManagementSystem.Infastructure.Repository
                 ImageUrl = player.ImageUrl,
                 MatchesPlayed = 0,
                 Tries = 0,
-                Conversions = 0
+                Conversions = 0,
+                Bio = player.Bio
             };
 
             _context.Players.Add(entity);
@@ -83,6 +85,7 @@ namespace RugbyManagementSystem.Infastructure.Repository
             entity.MatchesPlayed = player.MatchesPlayed;
             entity.Tries = player.Tries;
             entity.Conversions = player.Conversions;
+            entity.Bio = player.Bio;
 
             await _context.SaveChangesAsync();
             return ToDto(entity);

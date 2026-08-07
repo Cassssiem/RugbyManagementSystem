@@ -9,7 +9,9 @@ namespace RugbyManagementSystem.Application.DTOs.MatchDTOs
         [Required] public DateTime Date { get; set; }
         [Required] public string Location { get; set; }
         [Required] public Teams Team { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Score cannot be negative.")]
         public int Titans { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Score cannot be negative.")]
         public int OpponentScore { get; set; }
     }
 }

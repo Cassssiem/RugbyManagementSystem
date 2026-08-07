@@ -25,6 +25,6 @@ namespace RugbyManagementSystem.Application.DTOs.CreatePlayerDTOs
         [Required]
         public PlayerPosition Position { get; set; }
 
-
+        public string? Bio { get; set; }
     }
 }

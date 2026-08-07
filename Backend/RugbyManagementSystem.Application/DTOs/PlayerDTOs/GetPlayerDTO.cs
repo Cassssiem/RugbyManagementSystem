@@ -26,5 +26,7 @@ namespace RugbyManagementSystem.Application.DTOs.PlayerDTOs
         public string? ImageUrl { get; set; }
 
         public int Conversions { get; set; }
+
+        public string? Bio { get; set; }
     }
 }

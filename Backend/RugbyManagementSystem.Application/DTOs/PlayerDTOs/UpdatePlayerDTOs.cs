@@ -38,5 +38,6 @@ namespace RugbyManagementSystem.Application.DTOs.UpdatePlayer
 
         [Range(0, int.MaxValue)]
         public int Conversions { get; set; }
+        public string? Bio { get; set; }
     }
 }
