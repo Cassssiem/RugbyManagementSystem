@@ -1,0 +1,248 @@
+.player-detail-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem 1.5rem;
+  width: 100%;
+}
+
+.player-detail-back {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #404943;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.player-detail-back:hover {
+  color: #002819;
+}
+
+/* --- Hero header --- */
+.player-hero {
+  display: flex;
+  align-items: flex-start;   /* was: center */
+  gap: 1.75rem;
+  background: #002819;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  flex-wrap: wrap;
+}
+.player-hero-bio {
+  font-size: 0.85rem;
+  color: #d7e4dc;
+  line-height: 1.6;
+  margin-top: 1rem;
+  max-width: 420px;
+}
+.player-hero-photo {
+  width: 300px;
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 3px solid #fcd400;
+}
+
+.player-hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.player-hero-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #06402b;
+  color: #fcd400;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.player-hero-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.player-hero-position-tag {
+  display: inline-block;
+  background: #fcd400;
+  color: #002819;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.6rem;
+}
+
+.player-hero-name {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.player-hero-surname {
+  color: #fcd400;
+}
+
+.player-hero-nick {
+  font-size: 0.9rem;
+  color: #b8efd0;
+  font-style: italic;
+  margin: 0.4rem 0 0 0;
+}
+
+.player-hero-age {
+  font-size: 0.8rem;
+  color: #77ac90;
+  margin: 0.35rem 0 0 0;
+}
+
+/* --- Stats strip --- */
+.player-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.player-stat-box {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  padding: 1.25rem 0.5rem;
+  text-align: center;
+}
+
+.player-stat-box.highlight {
+  border-top: 3px solid #fcd400;
+}
+
+.player-stat-num {
+  display: block;
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: #002819;
+}
+
+.player-stat-label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #717973;
+  margin-top: 0.25rem;
+}
+
+.player-detail-section-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #002819;
+  margin-bottom: 1rem;
+}
+
+.player-detail-empty {
+  font-size: 0.85rem;
+  color: #717973;
+}
+
+/* --- History list --- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.history-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  padding: 0.9rem 1.25rem;
+}
+
+.history-card-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  flex-shrink: 0;
+  background: #f2f2f2;
+  border-radius: 6px;
+  padding: 0.4rem 0;
+}
+
+.history-day {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #002819;
+  line-height: 1;
+}
+
+.history-month {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: #717973;
+}
+
+.history-card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-card-opponent {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1a1c1c;
+  margin: 0;
+}
+
+.history-card-position {
+  font-size: 0.75rem;
+  color: #717973;
+  margin: 0.15rem 0 0 0;
+}
+
+.history-card-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  color: #404943;
+  flex-shrink: 0;
+}
+
+.history-scored-pill {
+  background: #fcd400;
+  color: #002819;
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+@media (max-width: 600px) {
+  .player-stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .player-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  .history-card {
+    flex-wrap: wrap;
+  }
+}
