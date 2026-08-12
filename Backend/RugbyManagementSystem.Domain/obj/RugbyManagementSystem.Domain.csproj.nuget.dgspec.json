@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj": {}
+    "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj": {
+    "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj",
         "projectName": "RugbyManagementSystem.Domain",
-        "projectPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj",
+        "projectPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj",
         "packagesPath": "C:\\Users\\Cassiem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\obj\\",
+        "outputPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

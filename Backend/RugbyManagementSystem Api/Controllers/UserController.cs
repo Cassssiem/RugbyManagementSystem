@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RugbyManagementSystem.Application.DTOs.UserDTOs;
 using RugbyManagementSystem.Application.Interfaces;
 using RugbyManagementSystem.Application.Services;
 using RugbyManagementSystem.Domain.Entities;
 using RugbyManagementSystem.Domain.Enums;
-using System.Numerics;
 
 namespace RugbyManagementSystem_Api.Controllers
 {
@@ -17,13 +16,14 @@ namespace RugbyManagementSystem_Api.Controllers
         private readonly IUserServices _userServices;
         private readonly TokenService _tokenService;
 
-        public UserController(IUserServices userServices, TokenService tokenService)
+        public UserController(
+            IUserServices userServices,
+            TokenService tokenService)
         {
             _userServices = userServices;
             _tokenService = tokenService;
         }
 
-        [HttpPost]
         [HttpPost]
         public async Task<ActionResult<CreateUserDTOs>> CreateUserAsync(CreateUserDTOs user)
         {
@@ -40,11 +40,11 @@ namespace RugbyManagementSystem_Api.Controllers
             return Ok(user);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult<UserDetails>> GetUserById(Guid Id)
+        public async Task<ActionResult<UserDetails>> GetUserById(Guid id)
         {
-            var user = await _userServices.GetUserByIdAsync(Id);
+            var user = await _userServices.GetUserByIdAsync(id);
 
             if (user == null)
                 return NotFound();
@@ -57,17 +57,22 @@ namespace RugbyManagementSystem_Api.Controllers
         {
             var user = await _userServices.GetByUsernameAsync(dto.Username);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            if (user == null ||
+                !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            {
                 return Unauthorized("Invalid username or password.");
+            }
 
             var token = _tokenService.GenerateToken(user);
+
             return Ok(new { token });
         }
 
-
         [HttpPut("{userId:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult<UserDetails>> UpdateUserAsync(Guid userId, UserDetails user)
+        public async Task<ActionResult<UserDetails>> UpdateUserAsync(
+            Guid userId,
+            UserDetails user)
         {
             if (userId != user.Id)
                 return BadRequest("The route ID does not match the user ID.");
@@ -80,19 +85,16 @@ namespace RugbyManagementSystem_Api.Controllers
             return Ok(updatedUser);
         }
 
-
-        [HttpDelete("Delete a User")]
+        [HttpDelete("{userId:guid}")]
         [Authorize(Roles = nameof(UserRoles.Admin))]
-        public async Task<ActionResult> DeleteUserAsync(Guid Id, UserDetails user)
+        public async Task<IActionResult> DeleteUserAsync(Guid userId)
         {
-
-            var result = await _userServices.DeleteUserAsync(Id);
+            var result = await _userServices.DeleteUserAsync(userId);
 
             if (result == null)
-                return NotFound("User was not found");
+                return NotFound("User was not found.");
 
-            return Ok("User was deleted");
+            return NoContent();
         }
-
     }
 }

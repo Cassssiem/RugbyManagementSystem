@@ -35,7 +35,9 @@ namespace RugbyManagementSystem.Infastructure.Repository
             return await _context.Users
                 .Select(u => new GetUserDTOs
                 {
-                    Username = u.Username
+                    Id = u.Id,
+                    Username = u.Username,
+                    Role = u.Role.ToString()   // ← convert enum to string
                 })
                 .ToListAsync();
         }
@@ -44,7 +46,12 @@ namespace RugbyManagementSystem.Infastructure.Repository
         {
             return await _context.Users
                 .Where(u => u.Id == id)
-                .Select(u => new GetUserDTOs { Username = u.Username })
+                .Select(u => new GetUserDTOs
+                {
+                    Id = u.Id,
+                    Username = u.Username,
+                    Role = u.Role.ToString()   // ← same fix here
+                })
                 .FirstOrDefaultAsync();
         }
 

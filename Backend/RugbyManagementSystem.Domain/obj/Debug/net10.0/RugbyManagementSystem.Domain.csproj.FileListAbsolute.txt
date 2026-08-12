@@ -13,3 +13,18 @@ C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagementSystem\Backend\R
 C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.pdb
 C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.genruntimeconfig.cache
 C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\ref\RugbyManagementSystem.Domain.dll
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\bin\Debug\net10.0\RugbyManagementSystem.Domain.deps.json
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\bin\Debug\net10.0\RugbyManagementSystem.Domain.runtimeconfig.json
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\bin\Debug\net10.0\RugbyManagementSystem.Domain.dll
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\bin\Debug\net10.0\RugbyManagementSystem.Domain.pdb
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.csproj.AssemblyReference.cache
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.AssemblyInfoInputs.cache
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.AssemblyInfo.cs
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.sourcelink.json
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.dll
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\refint\RugbyManagementSystem.Domain.dll
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.pdb
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\RugbyManagementSystem.Domain.genruntimeconfig.cache
+C:\Users\Cassiem\OneDrive - redAcademy (Pty) Ltd\RugbyManagement Back-end\RugbyManagementSystem\Backend\RugbyManagementSystem.Domain\obj\Debug\net10.0\ref\RugbyManagementSystem.Domain.dll

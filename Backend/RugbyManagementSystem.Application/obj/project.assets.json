@@ -3945,11 +3945,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Application\\RugbyManagementSystem.Application.csproj",
+      "projectUniqueName": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Application\\RugbyManagementSystem.Application.csproj",
       "projectName": "RugbyManagementSystem.Application",
-      "projectPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Application\\RugbyManagementSystem.Application.csproj",
+      "projectPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Application\\RugbyManagementSystem.Application.csproj",
       "packagesPath": "C:\\Users\\Cassiem\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Application\\obj\\",
+      "outputPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3971,8 +3971,8 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj": {
-              "projectPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj"
+            "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj": {
+              "projectPath": "C:\\Users\\Cassiem\\OneDrive - redAcademy (Pty) Ltd\\RugbyManagement Back-end\\RugbyManagementSystem\\Backend\\RugbyManagementSystem.Domain\\RugbyManagementSystem.Domain.csproj"
             }
           }
         }

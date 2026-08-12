@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RugbyManagementSystem.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a963c1297431b388c93e65c93d9cfb21bdc36aef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec010728bc2146245b349af32c104c05a0229043")]
 [assembly: System.Reflection.AssemblyProductAttribute("RugbyManagementSystem.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RugbyManagementSystem.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
