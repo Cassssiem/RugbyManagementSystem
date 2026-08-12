@@ -149,11 +149,20 @@ const handleDeleteMatch = async (matchId) => {
     setUsers(fresh);
   };
 
-  const handleDeleteUser = async (userId) => {
-    await usersApi.delete(userId);
-    const fresh = await usersApi.getAll();
-    setUsers(fresh);
-  };
+const handleDeleteUser = async (userId) => {
+  await usersApi.delete(userId);
+  const fresh = await usersApi.getAll();
+  setUsers(fresh);
+};
+
+const handleDeleteInquiry = async (id) => {
+  try {
+    await sponsorsApi.delete(id);
+  } finally {
+    const fresh = await sponsorsApi.getAll();
+    setInquiries(fresh);
+  }
+};
 
   const handleLogout = () => {
     logout();
@@ -303,14 +312,15 @@ const handleDeleteMatch = async (matchId) => {
           )}
 
           {view === 'admin-users' && (
-            <AdminUsers
-              users={users}
-              inquiries={inquiries}
-              onUpdateUser={handleUpdateUser}
-              onDeleteUser={handleDeleteUser}
-              onReviewInquiry={handleReviewInquiry}
-            />
-          )}
+              <AdminUsers
+                users={users}
+                inquiries={inquiries}
+                onUpdateUser={handleUpdateUser}
+                onDeleteUser={handleDeleteUser}
+                onReviewInquiry={handleReviewInquiry}
+                onDeleteInquiry={handleDeleteInquiry}
+              />
+            )}
         </main>
       </div>
 

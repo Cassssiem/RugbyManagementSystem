@@ -105,12 +105,13 @@
 
 .lineup-current-row-name {
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 .lineup-current-row-meta {
-  font-size: 0.7rem;
-  color: #717973;
+  
+  font-size: 1rem;
+  color: #000000;
 }
 
 .lineup-remove-btn {

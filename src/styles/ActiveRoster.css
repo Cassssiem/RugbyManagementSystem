@@ -62,3 +62,53 @@
   margin-top: 1rem;
   font-size: 0.75rem;
 }
+.roster-controls { 
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem; 
+  width: 100%;
+  align-items: center;
+ } 
+.search-container { 
+  flex: 1; 
+} 
+  .roster-search {
+  width: 100%;
+  padding: 0.85rem 1rem; 
+  font-size: 1rem; 
+  border: 1px solid #ccc; 
+  border-radius: 6px; 
+  outline: none; 
+  box-sizing: border-box;
+} 
+.roster-search:focus { 
+  border-color: #555; 
+} 
+
+.roster-filter { 
+  padding: 0.85rem 1rem;
+  font-size: 1rem; 
+  border: 1px solid #ccc;
+  border-radius: 6px; 
+  background: white; 
+  cursor: pointer; 
+  min-width: 180px;
+  outline: none;
+} 
+
+.roster-filter:focus { 
+border-color: #555; 
+} /* Mobile */ 
+@media (
+  max-width: 600px
+) 
+{ 
+  
+.roster-controls { 
+  flex-direction: column; 
+  align-items: stretch; 
+} 
+
+.roster-filter { 
+  width: 100%; 
+} }

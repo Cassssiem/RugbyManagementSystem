@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { matchPlayersApi } from '../api/matchPlayers';
 import { POSITIONS, TEAM_LABELS } from '../types';
 import '../styles/AdminLineupEditor.css';
+import { PlayerSearchSelect } from './PlayerSearchSelect';
 
 export const AdminLineupEditor = ({ players, selectedMatch, onNavigate, onStatsSaved }) => {
   const [lineup, setLineup] = useState([]);
@@ -145,19 +146,11 @@ export const AdminLineupEditor = ({ players, selectedMatch, onNavigate, onStatsS
             onSubmit={handleAddPlayer}
           >
             <label>Player</label>
-
-            <select
-              value={selectedPlayerId}
-              onChange={(e) => setSelectedPlayerId(e.target.value)}
-            >
-              <option value="">Select a player...</option>
-
-              {availablePlayers.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name} {p.surname}
-                </option>
-              ))}
-            </select>
+              <PlayerSearchSelect
+                players={availablePlayers}
+                value={selectedPlayerId}
+                onChange={setSelectedPlayerId}
+              />
 
             <label>Position</label>
 

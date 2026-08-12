@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TEAM_LABELS } from '../types';
 import { matchPlayersApi } from '../api/matchPlayers';
 import '../styles/AdminPlayers.css';
+import '../styles/AdminMatchesView.css';
 
 export const AdminMatchesView = ({ matches, onNavigate, onSelectMatch, onUpdateMatch, onDeleteMatch }) => {
   const [editingId, setEditingId] = useState(null);
@@ -102,123 +103,101 @@ export const AdminMatchesView = ({ matches, onNavigate, onSelectMatch, onUpdateM
 
       {error && <div className="admin-error">{error}</div>}
 
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Date</th><th>Team</th><th>Opponent</th><th>Score</th><th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {matches.map((m) => (
-            <React.Fragment key={m.id}>
-              <tr>
-                <td>{new Date(m.date).toLocaleDateString()}</td>
-                <td>{TEAM_LABELS[m.team]}</td>
-                <td>{m.opponent}</td>
-                <td>{m.titans} - {m.opponentScore}</td>
-                <td>
-                  {editingId === m.id ? (
-                    <button className="admin-row-btn delete" onClick={() => setEditingId(null)}>Close</button>
-                  ) : (
-                    <>
-                      <button className="admin-row-btn edit" onClick={() => startEditScore(m)}>Edit Score</button>
-                      <button
-                        className="admin-row-btn edit"
-                        onClick={() => { onSelectMatch(m); onNavigate('admin-lineup-editor'); }}
-                      >
-                        Manage Lineup
-                      </button>
-                      <button className="admin-row-btn delete" onClick={() => handleDelete(m.id)}>Delete</button>
-                    </>
-                  )}
-                </td>
-              </tr>
+      <div className="match-cards">
+        {matches.map((m) => (
+          <div key={m.id} className="match-manage-card">
+            <div className="match-manage-header">
+              <div>
+                <p className="match-manage-date">{new Date(m.date).toLocaleDateString()}</p>
+                <p className="match-manage-title">{TEAM_LABELS[m.team]} vs {m.opponent}</p>
+              </div>
+              <span className="match-manage-score">{m.titans} - {m.opponentScore}</span>
+            </div>
 
-              {editingId === m.id && (
-                <tr>
-                  <td colSpan={5}>
-                    <div style={{ background: '#f7f7f7', padding: '1.25rem', borderRadius: '4px' }}>
-
-                      <h3 style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>Final Match Score</h3>
-                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1.5rem' }}>
-                        <input
-                          type="number"
-                          min="0"
-                          value={scoreForm.titans}
-                          onChange={(e) => setScoreForm((f) => ({ ...f, titans: Number(e.target.value) }))}
-                          style={{ width: 60 }}
-                        />
-                        -
-                        <input
-                          type="number"
-                          min="0"
-                          value={scoreForm.opponentScore}
-                          onChange={(e) => setScoreForm((f) => ({ ...f, opponentScore: Number(e.target.value) }))}
-                          style={{ width: 60 }}
-                        />
-                        <button className="admin-row-btn edit" onClick={() => saveMatchScore(m)} disabled={saving}>
-                          Save Score
-                        </button>
-                      </div>
-
-                      <h3 style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>Who Scored?</h3>
-
-                      {loadingLineup && <p style={{ fontSize: '0.8rem' }}>Loading lineup...</p>}
-                      {!loadingLineup && lineup.length === 0 && (
-                        <p style={{ fontSize: '0.8rem' }}>
-                          No players have been added to this match's lineup yet — add them first via "Manage Lineup."
-                        </p>
-                      )}
-
-                      {!loadingLineup && lineup.length > 0 && (
-                        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'end', flexWrap: 'wrap' }}>
-                          <div>
-                            <label style={{ fontSize: '0.65rem', display: 'block', textTransform: 'uppercase' }}>Player</label>
-                            <select value={selectedPlayerId} onChange={(e) => handleSelectPlayer(e.target.value)}>
-                              <option value="">Select a player...</option>
-                              {lineup.map((p) => (
-                                <option key={p.playerId} value={p.playerId}>
-                                  {p.playerName} ({p.position})
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div>
-                            <label style={{ fontSize: '0.65rem', display: 'block', textTransform: 'uppercase' }}>Tries</label>
-                            <input
-                              type="number"
-                              min="0"
-                              value={tries}
-                              onChange={(e) => setTries(e.target.value)}
-                              style={{ width: 60 }}
-                            />
-                          </div>
-
-                          <div>
-                            <label style={{ fontSize: '0.65rem', display: 'block', textTransform: 'uppercase' }}>Conversions</label>
-                            <input
-                              type="number"
-                              min="0"
-                              value={conversions}
-                              onChange={(e) => setConversions(e.target.value)}
-                              style={{ width: 60 }}
-                            />
-                          </div>
-
-                          <button className="admin-row-btn edit" onClick={() => savePlayerScore(m)} disabled={saving}>
-                            Save Player Stats
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </td>
-                </tr>
+            <div className="match-manage-actions">
+              {editingId === m.id ? (
+                <button className="admin-row-btn delete" onClick={() => setEditingId(null)}>Close</button>
+              ) : (
+                <>
+                  <button className="admin-row-btn edit" onClick={() => startEditScore(m)}>Edit Score</button>
+                  <button
+                    className="admin-row-btn edit"
+                    onClick={() => { onSelectMatch(m); onNavigate('admin-lineup-editor'); }}
+                  >
+                    Manage Lineup
+                  </button>
+                  <button className="admin-row-btn delete" onClick={() => handleDelete(m.id)}>Delete</button>
+                </>
               )}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+            </div>
+
+            {editingId === m.id && (
+              <div className="match-edit-panel">
+
+                <h3 className="match-edit-subtitle">Final Match Score</h3>
+                <div className="match-score-editor">
+                  <input
+                    type="number"
+                    min="0"
+                    value={scoreForm.titans}
+                    onChange={(e) => setScoreForm((f) => ({ ...f, titans: Number(e.target.value) }))}
+                  />
+                  <span>-</span>
+                  <input
+                    type="number"
+                    min="0"
+                    value={scoreForm.opponentScore}
+                    onChange={(e) => setScoreForm((f) => ({ ...f, opponentScore: Number(e.target.value) }))}
+                  />
+                  <button className="admin-row-btn edit" onClick={() => saveMatchScore(m)} disabled={saving}>
+                    Save Score
+                  </button>
+                </div>
+
+                <h3 className="match-edit-subtitle">Who Scored?</h3>
+
+                {loadingLineup && <p className="match-edit-note">Loading lineup...</p>}
+                {!loadingLineup && lineup.length === 0 && (
+                  <p className="match-edit-note">
+                    No players in this match's lineup yet — add them via "Manage Lineup" first.
+                  </p>
+                )}
+
+                {!loadingLineup && lineup.length > 0 && (
+                  <div className="player-score-editor">
+                    <div className="match-edit-field">
+                      <label>Player</label>
+                      <select value={selectedPlayerId} onChange={(e) => handleSelectPlayer(e.target.value)}>
+                        <option value="">Select a player...</option>
+                        {lineup.map((p) => (
+                          <option key={p.playerId} value={p.playerId}>
+                            {p.playerName} ({p.position})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="match-edit-field-row">
+                      <div className="match-edit-field">
+                        <label>Tries</label>
+                        <input type="number" min="0" value={tries} onChange={(e) => setTries(e.target.value)} />
+                      </div>
+                      <div className="match-edit-field">
+                        <label>Conversions</label>
+                        <input type="number" min="0" value={conversions} onChange={(e) => setConversions(e.target.value)} />
+                      </div>
+                    </div>
+
+                    <button className="admin-row-btn edit" onClick={() => savePlayerScore(m)} disabled={saving}>
+                      Save Player Stats
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

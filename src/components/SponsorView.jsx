@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { sponsorsApi } from '../api/sponsors';
 import '../styles/SponsorView.css';
+const NAME_PATTERN = /^[a-zA-Z\s'-]+$/;
+const PHONE_PATTERN = /^[0-9]*$/;
+
+
 
 export const SponsorView = () => {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
@@ -13,19 +17,57 @@ export const SponsorView = () => {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setSaving(true);
-    try {
-      await sponsorsApi.submit(form);
-      setSubmitted(true);
-    } catch (err) {
-      setError(err.message || 'Something went wrong. Please try again.');
-    } finally {
-      setSaving(false);
+
+  
+const looksLikeRealWords = (text) => {
+  const letters = text.replace(/[^a-zA-Z]/g, '');
+  if (letters.length < 5) return false;
+
+  const vowels = (letters.match(/[aeiouAEIOU]/g) || []).length;
+  const vowelRatio = vowels / letters.length;
+  if (vowelRatio < 0.15 || vowelRatio > 0.75) return false;
+
+  let consonantStreak = 0;
+  for (const c of letters) {
+    if (!/[aeiouAEIOU]/.test(c)) {
+      consonantStreak++;
+      if (consonantStreak > 5) return false;
+    } else {
+      consonantStreak = 0;
     }
-  };
+  }
+
+  const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+  return wordCount >= 2;
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError(null);
+
+  if (!NAME_PATTERN.test(form.name)) {
+    setError('Name can only contain letters, spaces, hyphens, and apostrophes.');
+    return;
+  }
+  if (!looksLikeRealWords(form.message)) {
+    setError('Please enter a real message, not random characters.');
+    return;
+  }
+    if (!looksLikeRealWords(form.message)) {
+    setError('Please enter a real message, not random characters.');
+    return;
+  }
+
+  setSaving(true);
+  try {
+    await sponsorsApi.submit(form);
+    setSubmitted(true);
+  } catch (err) {
+    setError(err.message || 'Something went wrong. Please try again.');
+  } finally {
+    setSaving(false);
+  }
+};
 
   if (submitted) {
     return (
@@ -61,7 +103,14 @@ export const SponsorView = () => {
 
           <div className="sponsor-field">
             <label>Phone (optional)</label>
-            <input name="phone" value={form.phone} onChange={handleChange} />
+            <input
+              name="phone"
+              value={form.phone}
+              onChange={(e) => {
+                const digitsOnly = e.target.value.replace(/[^0-9]/g, '');
+                setForm((f) => ({ ...f, phone: digitsOnly }));
+              }}
+            />
           </div>
 
           <div className="sponsor-field">

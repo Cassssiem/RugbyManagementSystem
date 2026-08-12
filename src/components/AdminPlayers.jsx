@@ -15,11 +15,28 @@ export const AdminPlayers = ({ players, onAddPlayer, onUpdatePlayer, onDeletePla
     setForm((f) => ({ ...f, [name]: name === 'age' ? Number(value) : value }));
   };
 
-  const handleSubmit = async (e) => {
+const NAME_PATTERN = /^[a-zA-Z\s'-]+$/;
+
+const handleSubmit = async (e) => {
   e.preventDefault();
   setError(null);
+
+  if (!NAME_PATTERN.test(form.name)) {
+    setError('Name can only contain letters, spaces, hyphens, and apostrophes.');
+    return;
+  }
+  if (!NAME_PATTERN.test(form.surname)) {
+    setError('Surname can only contain letters, spaces, hyphens, and apostrophes.');
+    return;
+  }
+  if (form.nickName && !NAME_PATTERN.test(form.nickName)) {
+    setError('Nickname can only contain letters, spaces, hyphens, and apostrophes.');
+    return;
+  }
+
   setSaving(true);
   try {
+    // ...existing submit logic...
     let payload = { ...form };
 
     if (imageFile) {

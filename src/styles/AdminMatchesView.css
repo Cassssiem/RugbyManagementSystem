@@ -1,0 +1,121 @@
+.match-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.match-manage-card {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+}
+
+.match-manage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.match-manage-date {
+  font-size: 0.75rem;
+  color: #717973;
+  margin: 0;
+}
+
+.match-manage-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 0.2rem 0 0 0;
+}
+
+.match-manage-score {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #002819;
+}
+
+.match-manage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.match-edit-panel {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.match-edit-subtitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.match-score-editor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.match-score-editor input {
+  width: 60px;
+  padding: 0.4rem;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+}
+
+.match-edit-note {
+  font-size: 0.8rem;
+  color: #717973;
+}
+
+.player-score-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.match-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.match-edit-field label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #404943;
+}
+
+.match-edit-field select,
+.match-edit-field input {
+  padding: 0.5rem;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.match-edit-field-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.match-edit-field-row .match-edit-field {
+  flex: 1;
+}
+
+@media (min-width: 700px) {
+  /* On larger screens, let the score/tries fields sit narrower instead of full width */
+  .match-edit-field {
+    max-width: 200px;
+  }
+}
