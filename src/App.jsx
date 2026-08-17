@@ -13,6 +13,7 @@ import { PlayerDetail } from './components/PlayerDetail';
 import { PitchVisualizer } from './components/PitchVisualizer';
 import { SponsorView } from './components/SponsorView';
 import { AuthView } from './components/AuthView';
+import { GalleryView } from './components/GalleryView';
 
 import { AdminSidebar } from './components/AdminSidebar';
 import { AdminDashboard } from './components/AdminDashboard';
@@ -21,6 +22,7 @@ import { AdminPlayers } from './components/AdminPlayers';
 import { AdminLineupEditor } from './components/AdminLineupEditor';
 import { AdminMatchSetup } from './components/AdminMatchSetup';
 import { AdminUsers } from './components/AdminUsers';
+import { AdminGallery } from './components/AdminGallery';
 
 import './styles/App.css';
 
@@ -171,14 +173,15 @@ const handleDeleteInquiry = async (id) => {
     navigate('matches');
   };
 
-  const isAdminView = [
-    'admin-dashboard',
-    'admin-matches',
-    'admin-players',
-    'admin-lineup-editor',
-    'admin-match-setup',
-    'admin-users',
-  ].includes(view);
+const isAdminView = [
+  'admin-dashboard',
+  'admin-matches',
+  'admin-players',
+  'admin-lineup-editor',
+  'admin-match-setup',
+  'admin-users',
+  'admin-gallery',   // ← add this
+].includes(view);
 
   // Guard: don't let a non-Admin sit on an admin view
   useEffect(() => {
@@ -268,7 +271,8 @@ const handleDeleteInquiry = async (id) => {
               onNavigate={navigate}
             />
           )}
-
+{view === 'gallery' && <GalleryView />}
+{view === 'admin-gallery' && <AdminGallery matches={matches} />}
           {/* Admin Views */}
           {view === 'admin-dashboard' && (
             <AdminDashboard

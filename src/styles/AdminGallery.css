@@ -1,0 +1,63 @@
+.gallery-admin-form {
+  background: #fff;
+  border: 1px solid #c0c9c1;
+  border-radius: 2px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-admin-form .admin-field {
+  margin-bottom: 1rem;
+}
+
+.gallery-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.gallery-admin-subtitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #002819;
+  margin-bottom: 0.75rem;
+}
+
+.gallery-admin-note {
+  font-size: 0.8rem;
+  color: #717973;
+}
+
+.gallery-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.gallery-admin-thumb-wrap {
+  position: relative;
+}
+
+.gallery-admin-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.gallery-admin-delete {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ba1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+}

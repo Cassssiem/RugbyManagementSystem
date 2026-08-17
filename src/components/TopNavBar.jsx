@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { label: 'Home', view: 'home' },
   { label: 'Players', view: 'players' },
   { label: 'Matches', view: 'matches' },
+  { label: 'Gallery', view: 'gallery' },
   { label: 'Sponsor Us', view: 'sponsor' },
 ];
 

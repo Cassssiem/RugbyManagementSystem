@@ -5,6 +5,7 @@ const ADMIN_LINKS = [
   { label: 'Dashboard', view: 'admin-dashboard' },
   { label: 'Players', view: 'admin-players' },
   { label: 'Matches', view: 'admin-matches' },
+  { label: 'Gallery', view: 'admin-gallery' },
   { label: 'Users & Inquiries', view: 'admin-users' },
 ];
 
