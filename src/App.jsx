@@ -13,6 +13,7 @@ import { PlayerDetail } from './components/PlayerDetail';
 import { PitchVisualizer } from './components/PitchVisualizer';
 import { SponsorView } from './components/SponsorView';
 import { AuthView } from './components/AuthView';
+import { GalleryView } from './components/GalleryView';
 
 import { AdminSidebar } from './components/AdminSidebar';
 import { AdminDashboard } from './components/AdminDashboard';
@@ -21,6 +22,7 @@ import { AdminPlayers } from './components/AdminPlayers';
 import { AdminLineupEditor } from './components/AdminLineupEditor';
 import { AdminMatchSetup } from './components/AdminMatchSetup';
 import { AdminUsers } from './components/AdminUsers';
+import { AdminGallery } from './components/AdminGallery';
 
 import './styles/App.css';
 
@@ -149,11 +151,20 @@ const handleDeleteMatch = async (matchId) => {
     setUsers(fresh);
   };
 
-  const handleDeleteUser = async (userId) => {
-    await usersApi.delete(userId);
-    const fresh = await usersApi.getAll();
-    setUsers(fresh);
-  };
+const handleDeleteUser = async (userId) => {
+  await usersApi.delete(userId);
+  const fresh = await usersApi.getAll();
+  setUsers(fresh);
+};
+
+const handleDeleteInquiry = async (id) => {
+  try {
+    await sponsorsApi.delete(id);
+  } finally {
+    const fresh = await sponsorsApi.getAll();
+    setInquiries(fresh);
+  }
+};
 
   const handleLogout = () => {
     logout();
@@ -162,14 +173,15 @@ const handleDeleteMatch = async (matchId) => {
     navigate('matches');
   };
 
-  const isAdminView = [
-    'admin-dashboard',
-    'admin-matches',
-    'admin-players',
-    'admin-lineup-editor',
-    'admin-match-setup',
-    'admin-users',
-  ].includes(view);
+const isAdminView = [
+  'admin-dashboard',
+  'admin-matches',
+  'admin-players',
+  'admin-lineup-editor',
+  'admin-match-setup',
+  'admin-users',
+  'admin-gallery',   // ← add this
+].includes(view);
 
   // Guard: don't let a non-Admin sit on an admin view
   useEffect(() => {
@@ -259,7 +271,8 @@ const handleDeleteMatch = async (matchId) => {
               onNavigate={navigate}
             />
           )}
-
+{view === 'gallery' && <GalleryView />}
+{view === 'admin-gallery' && <AdminGallery matches={matches} />}
           {/* Admin Views */}
           {view === 'admin-dashboard' && (
             <AdminDashboard
@@ -303,14 +316,15 @@ const handleDeleteMatch = async (matchId) => {
           )}
 
           {view === 'admin-users' && (
-            <AdminUsers
-              users={users}
-              inquiries={inquiries}
-              onUpdateUser={handleUpdateUser}
-              onDeleteUser={handleDeleteUser}
-              onReviewInquiry={handleReviewInquiry}
-            />
-          )}
+              <AdminUsers
+                users={users}
+                inquiries={inquiries}
+                onUpdateUser={handleUpdateUser}
+                onDeleteUser={handleDeleteUser}
+                onReviewInquiry={handleReviewInquiry}
+                onDeleteInquiry={handleDeleteInquiry}
+              />
+            )}
         </main>
       </div>
 

@@ -7,6 +7,7 @@
   padding: 1.5rem 1rem;
   flex-shrink: 0;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .admin-sidebar-brand {
@@ -133,18 +134,117 @@
   font-size: 0.65rem;
   color: #77ac90;
 }
+
+/* --- Mobile-only elements: hidden on desktop by default --- */
+.mobile-only {
+  display: none;
+}
+
+.admin-mobile-bar {
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+}
+
+.admin-hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0.4rem;
+}
+
+.admin-hamburger span {
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.admin-hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.admin-hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.admin-hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.admin-mobile-menu {
+  flex-direction: column;
+  background: #002819;
+  padding: 0.5rem 1rem 1.25rem 1rem;
+}
+
+.admin-mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #b8efd0;
+  padding: 0.65rem 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 1px solid #06402b;
+}
+
+.admin-mobile-link:last-child {
+  border-bottom: none;
+}
+
+.admin-mobile-link.active {
+  color: #fcd400;
+}
+
+.admin-mobile-link.logout {
+  color: #ff9d9d;
+}
+
+.admin-back-to-site {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #77ac90;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-back-to-site:hover {
+  color: #fcd400;
+}
+
+/* --- Mobile breakpoint: single source of truth, no duplicate blocks --- */
 @media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+  }
+
   .admin-sidebar {
     width: 100%;
     min-height: auto;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
     padding: 0.75rem 1rem;
+    box-sizing: border-box;
   }
-  .admin-sidebar-links { flex-direction: row; overflow-x: auto; gap: 0.5rem; }
-  .admin-sidebar-brand,
-  .admin-sidebar-add-match,
-  .admin-sidebar-profile { display: none; }
-  .admin-sidebar-link { white-space: nowrap; }
+
+  .admin-hamburger {
+    position: fixed;
+    top: 0.9rem;
+    right: 1rem;
+    z-index: 30;
+  }
 }

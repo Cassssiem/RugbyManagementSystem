@@ -1,0 +1,112 @@
+.gallery-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem 1.5rem;
+  width: 100%;
+}
+
+.gallery-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #002819;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.gallery-loading,
+.gallery-empty {
+  font-size: 0.9rem;
+  color: #717973;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.gallery-thumb {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: #1a1a1a;   /* fills the empty space around contained images */
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-thumb:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* was: cover — this shows the full image instead of cropping it */
+  display: block;
+}
+
+.gallery-thumb-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 40, 25, 0.85), transparent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 1.5rem 0.9rem 0.7rem 0.9rem;
+  text-align: left;
+}
+
+/* --- Lightbox (full-size view) --- */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  cursor: pointer;
+  padding: 2rem;
+}
+
+.gallery-lightbox img {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-lightbox-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.gallery-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+}
