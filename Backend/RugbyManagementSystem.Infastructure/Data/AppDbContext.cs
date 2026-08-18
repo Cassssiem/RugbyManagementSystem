@@ -14,6 +14,8 @@ namespace RugbyManagementSystem.Infastructure.Data
         public DbSet<UserDetails> Users { get; set; }
         public DbSet<MatchPlayer> MatchPlayers { get; set; }
         public DbSet<SponsorInquiry> SponsorInquiries { get; set; }
+        public DbSet<GalleryPhoto> GalleryPhotos { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,6 +44,8 @@ namespace RugbyManagementSystem.Infastructure.Data
                 .WithMany(m => m.MatchPlayers)
                 .HasForeignKey(mp => mp.MatchId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
         }
     }
 }

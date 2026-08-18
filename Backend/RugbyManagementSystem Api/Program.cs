@@ -101,7 +101,7 @@ namespace RugbyManagementSystem_Api
 
             // Database
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(
+                options.UseNpgsql(
                     builder.Configuration.GetConnectionString("DefaultConnection")
                 ));
 
@@ -112,6 +112,8 @@ namespace RugbyManagementSystem_Api
             builder.Services.AddScoped<IMatchPlayerServices, MatchPlayerService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<ISponsorInquiryServices, SponsorInquiryServices>();
+            builder.Services.AddScoped<IGalleryPhotoServices, GalleryPhotoServices>();
+
 
             // Repositories
             builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
@@ -119,7 +121,7 @@ namespace RugbyManagementSystem_Api
             builder.Services.AddScoped<IMatchPlayerRepository, MatchPlayerRepository>();
             builder.Services.AddScoped<IUserRepository, UserRpository>();
             builder.Services.AddScoped<ISponsorInquiryRepository, SponsorInquiryRepository>();
-
+            builder.Services.AddScoped<IGalleryPhotoRepository, GalleryPhotoRepository>();
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
 

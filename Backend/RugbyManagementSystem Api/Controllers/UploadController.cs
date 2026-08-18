@@ -42,5 +42,32 @@ namespace RugbyManagementSystem_Api.Controllers
             var url = $"/uploads/players/{fileName}";
             return Ok(new { url });
         }
+
+        [HttpPost("gallery-photo")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UploadGalleryPhoto(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
+
+            if (!file.ContentType.StartsWith("image/"))
+                return BadRequest("Only image files are allowed.");
+
+            if (file.Length > 5 * 1024 * 1024)
+                return BadRequest("Image must be under 5MB.");
+
+            var uploadsFolder = Path.Combine(_env.WebRootPath ?? "wwwroot", "uploads", "gallery");
+            Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Ok(new { url = $"/uploads/gallery/{fileName}" });
+        }
     }
 }
