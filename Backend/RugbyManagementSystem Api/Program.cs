@@ -158,36 +158,20 @@ namespace RugbyManagementSystem_Api
 
                 var adminUsername = app.Configuration["SeedAdmin:Username"];
                 var adminPassword = app.Configuration["SeedAdmin:Password"];
-                var resetAdminPassword =
-                    app.Configuration.GetValue<bool>("SeedAdmin:ResetPassword");
 
                 if (!string.IsNullOrWhiteSpace(adminUsername) &&
-                    !string.IsNullOrWhiteSpace(adminPassword))
+                    !string.IsNullOrWhiteSpace(adminPassword) &&
+                    !db.Users.Any(u => u.Role == UserRoles.Admin))
                 {
-                    var existingAdmin =
-                        db.Users.FirstOrDefault(u => u.Role == UserRoles.Admin);
-
-                    if (existingAdmin == null)
+                    db.Users.Add(new UserDetails
                     {
-                        db.Users.Add(new UserDetails
-                        {
-                            Username = adminUsername,
-                            Password = BCrypt.Net.BCrypt.HashPassword(adminPassword),
-                            Role = UserRoles.Admin
-                        });
+                        Username = adminUsername,
+                        Password = BCrypt.Net.BCrypt.HashPassword(adminPassword),
+                        Role = UserRoles.Admin
+                    });
 
-                        db.SaveChanges();
-                        Console.WriteLine("Initial administrator created.");
-                    }
-                    else if (resetAdminPassword)
-                    {
-                        existingAdmin.Username = adminUsername;
-                        existingAdmin.Password =
-                            BCrypt.Net.BCrypt.HashPassword(adminPassword);
-
-                        db.SaveChanges();
-                        Console.WriteLine("Administrator credentials reset.");
-                    }
+                    db.SaveChanges();
+                    Console.WriteLine("Initial administrator created.");
                 }
             }
             catch (Exception ex)

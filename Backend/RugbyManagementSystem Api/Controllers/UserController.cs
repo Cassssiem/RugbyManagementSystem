@@ -57,20 +57,13 @@ namespace RugbyManagementSystem_Api.Controllers
         {
             var user = await _userServices.GetByUsernameAsync(dto.Username);
 
-            var passwordValid =
-                user != null &&
-                BCrypt.Net.BCrypt.Verify(dto.Password, user.Password);
-
-            Console.WriteLine(
-                $"LOGIN CHECK: username='{dto.Username}', " +
-                $"userFound={user != null}, passwordValid={passwordValid}");
-
-            if (!passwordValid)
+            if (user == null ||
+                !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
                 return Unauthorized("Invalid username or password.");
             }
 
-            var token = _tokenService.GenerateToken(user!);
+            var token = _tokenService.GenerateToken(user);
 
             return Ok(new { token });
         }
