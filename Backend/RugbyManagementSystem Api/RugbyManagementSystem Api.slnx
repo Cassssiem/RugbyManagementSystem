@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
-    <File Path=".gitignore" />
-    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile" />
   </Folder>
   <Project Path="../RugbyManagementSystem.Application/RugbyManagementSystem.Application.csproj" />
   <Project Path="../RugbyManagementSystem.Domain/RugbyManagementSystem.Domain.csproj" />

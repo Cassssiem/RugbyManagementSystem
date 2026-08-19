@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("322b5d57-3e44-424b-9baa-1bad61dcfb68")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("RugbyManagementSystem Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+944471bc7d3944ae0c814494b15719d40dbf60b4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fcc8fbbf9475cbaf734f7981d3042122da621b57")]
 [assembly: System.Reflection.AssemblyProductAttribute("RugbyManagementSystem Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RugbyManagementSystem Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
