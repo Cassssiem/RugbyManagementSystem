@@ -1,10 +1,14 @@
-console.log("THIS IS THE REAL CONFIG FILE");
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://rugbymanagementsystem.onrender.com/api";
 
-export const API_BASE_URL = "https://localhost:7056/api";
+export const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, "");
 
-export function getAuthHeaders() {
-  const token = localStorage.getItem("authToken");
-  return token
-    ? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
-    : { "Content-Type": "application/json" };
+export function getAssetUrl(path) {
+  if (!path) return null;
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return path;
+  }
+
+  return `${API_ORIGIN}${path}`;
 }

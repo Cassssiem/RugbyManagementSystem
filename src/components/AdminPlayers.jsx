@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { POSITIONS, EMPTY_PLAYER_FORM } from '../types';
 import { uploadPlayerImage } from '../api/upload';
 import '../styles/AdminPlayers.css';
+import { getAssetUrl } from "../api/config";
 
 export const AdminPlayers = ({ players, onAddPlayer, onUpdatePlayer, onDeletePlayer }) => {
   const [form, setForm] = useState(EMPTY_PLAYER_FORM);
@@ -158,7 +159,7 @@ const handleSubmit = async (e) => {
               <td>
                 {p.imageUrl ? (
                   <img
-                    src={`https://localhost:7056${p.imageUrl}`}
+                    src={getAssetUrl(p.imageUrl)}
                     alt={p.name}
                     style={{ width: 40, height: 40, borderRadius: 4, objectFit: 'cover' }}
                   />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { matchPlayersApi } from '../api/matchPlayers';
 import '../styles/PlayerDetail.css';
+import { getAssetUrl } from "../api/config";
 
 export const PlayerDetail = ({ player, onBack }) => {
   const [history, setHistory] = useState([]);
@@ -24,7 +25,7 @@ export const PlayerDetail = ({ player, onBack }) => {
       <div className="player-hero">
         <div className="player-hero-photo">
           {player.imageUrl ? (
-            <img src={`https://localhost:7056${player.imageUrl}`} alt={player.name} />
+           <img src={getAssetUrl(player.imageUrl)} alt={player.name} />
           ) : (
             <div className="player-hero-photo-placeholder">
               {player.name?.[0]}{player.surname?.[0]}
