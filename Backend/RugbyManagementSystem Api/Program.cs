@@ -26,7 +26,10 @@ namespace RugbyManagementSystem_Api
                 options.AddPolicy("AllowFrontend", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:5173") // your React/Vite URL
+                        .WithOrigins(
+                            builder.Configuration["Cors:AllowedOrigin"]
+                            ?? "http://localhost:5173"
+                        )
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });
@@ -143,12 +146,17 @@ namespace RugbyManagementSystem_Api
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 db.Database.Migrate();
 
-                if (!db.Users.Any(u => u.Role == UserRoles.Admin))
+                var adminUsername = app.Configuration["SeedAdmin:Username"];
+                var adminPassword = app.Configuration["SeedAdmin:Password"];
+
+                if (!string.IsNullOrWhiteSpace(adminUsername) &&
+                    !string.IsNullOrWhiteSpace(adminPassword) &&
+                    !db.Users.Any(u => u.Role == UserRoles.Admin))
                 {
                     db.Users.Add(new UserDetails
                     {
-                        Username = "Gino",
-                        Password = BCrypt.Net.BCrypt.HashPassword("TheGreatGino"),
+                        Username = adminUsername,
+                        Password = BCrypt.Net.BCrypt.HashPassword(adminPassword),
                         Role = UserRoles.Admin
                     });
 

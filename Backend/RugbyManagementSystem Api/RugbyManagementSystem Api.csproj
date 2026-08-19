@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>RugbyManagementSystem_Api</RootNamespace>
+    <UserSecretsId>322b5d57-3e44-424b-9baa-1bad61dcfb68</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
