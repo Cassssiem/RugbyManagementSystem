@@ -4,8 +4,18 @@ export const API_BASE_URL =
 
 export const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, "");
 
+export function getAuthHeaders() {
+  const token = localStorage.getItem("authToken");
+
+  return {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+}
+
 export function getAssetUrl(path) {
   if (!path) return null;
+
   if (path.startsWith("http://") || path.startsWith("https://")) {
     return path;
   }
