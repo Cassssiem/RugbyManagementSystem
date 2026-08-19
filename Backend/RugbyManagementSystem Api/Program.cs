@@ -141,10 +141,20 @@ namespace RugbyManagementSystem_Api
 
 
 
-            using (var scope = app.Services.CreateScope())
+            Console.WriteLine("Starting database initialization...");
+
+            try
             {
+                using var scope = app.Services.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+                Console.WriteLine("Connecting to PostgreSQL...");
+                db.Database.SetCommandTimeout(60);
+
+                Console.WriteLine("Running migrations...");
                 db.Database.Migrate();
+
+                Console.WriteLine("Database migrations completed.");
 
                 var adminUsername = app.Configuration["SeedAdmin:Username"];
                 var adminPassword = app.Configuration["SeedAdmin:Password"];
@@ -161,7 +171,13 @@ namespace RugbyManagementSystem_Api
                     });
 
                     db.SaveChanges();
+                    Console.WriteLine("Initial administrator created.");
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"DATABASE STARTUP FAILED: {ex}");
+                throw;
             }
             app.UseCors("AllowFrontend");
 
