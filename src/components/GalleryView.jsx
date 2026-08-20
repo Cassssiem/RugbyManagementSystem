@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { galleryApi } from '../api/gallery';
 import '../styles/GalleryView.css';
+import { getAssetUrl } from '../api/config';
 
 export const GalleryView = () => {
   const [photos, setPhotos] = useState([]);
@@ -25,17 +26,24 @@ export const GalleryView = () => {
           <button
             key={photo.id}
             className="gallery-thumb"
-            onClick={() => setLightboxUrl(photo.imageUrl)}
+           onClick={() => setLightboxUrl(getAssetUrl(photo.imageUrl))}
           >
-            <img src={`https://localhost:7056${photo.imageUrl}`} alt={photo.caption || 'Club photo'} />
-            {photo.caption && <span className="gallery-thumb-caption">{photo.caption}</span>}
-          </button>
+            <img
+  src={getAssetUrl(photo.imageUrl)}
+  alt={photo.caption || 'Club photo'}
+/>
+{photo.caption && (
+  <span className="gallery-thumb-caption">
+    {photo.caption}
+  </span>
+)}
+</button>
         ))}
       </div>
 
       {lightboxUrl && (
         <div className="gallery-lightbox" onClick={() => setLightboxUrl(null)}>
-          <img src={`https://localhost:7056${lightboxUrl}`} alt="Full size" />
+          <img src={lightboxUrl} alt="Full size" />
           <button className="gallery-lightbox-close" onClick={() => setLightboxUrl(null)}>×</button>
         </div>
       )}

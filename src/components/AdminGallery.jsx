@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { galleryApi, uploadGalleryPhoto } from '../api/gallery';
 import '../styles/AdminPlayers.css';
 import '../styles/AdminGallery.css';
+import { getAssetUrl } from '../api/config';
 
 export const AdminGallery = () => {
   const [photos, setPhotos] = useState([]);
@@ -78,9 +79,18 @@ export const AdminGallery = () => {
       <div className="gallery-admin-grid">
         {photos.map((p) => (
           <div key={p.id} className="gallery-admin-thumb-wrap">
-            <img src={`https://localhost:7056${p.imageUrl}`} alt={p.caption || 'Photo'} className="gallery-admin-thumb" />
-            <button className="gallery-admin-delete" onClick={() => handleDelete(p.id)}>×</button>
-          </div>
+            <img
+              src={getAssetUrl(p.imageUrl)}
+              alt={p.caption || 'Photo'}
+              className="gallery-admin-thumb"
+            />
+            <button
+              className="gallery-admin-delete"
+              onClick={() => handleDelete(p.id)}
+            >
+              ×
+            </button>
+            </div>
         ))}
       </div>
     </div>
