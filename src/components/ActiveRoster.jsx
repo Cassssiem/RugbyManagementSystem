@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import '../styles/ActiveRoster.css';
+import { getAssetUrl } from "../api/config";
 
 export const ActiveRoster = ({ players, loading, onSelectPlayer }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -96,9 +97,7 @@ export const ActiveRoster = ({ players, loading, onSelectPlayer }) => {
           >
             {/* Player Image - KEPT */}
             {player.imageUrl ? (
-              <img
-                src={`https://localhost:7056${player.imageUrl}`}
-                alt={player.name}
+              <img src={getAssetUrl(player.imageUrl)} alt={`${player.name} ${player.surname}`}
                 style={{
                   width: '100%',
                   height: 250,
