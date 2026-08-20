@@ -18,7 +18,12 @@ export const AdminMatchSetup = ({ onAddMatch, onNavigate }) => {
     setError(null);
     setSaving(true);
     try {
-      await onAddMatch(form);
+      const payload = {
+  ...form,
+  date: new Date(form.date).toISOString(),
+};
+
+await onAddMatch(payload);
       onNavigate('admin-matches');
     } catch (err) {
       setError(err.message || 'Something went wrong.');
