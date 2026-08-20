@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RugbyManagementSystem_Api.Controllers
@@ -7,67 +9,98 @@ namespace RugbyManagementSystem_Api.Controllers
     [ApiController]
     public class UploadController : ControllerBase
     {
-        private readonly IWebHostEnvironment _env;
+        private readonly IAmazonS3 _s3;
+        private readonly string _bucket;
+        private readonly string _publicBaseUrl;
 
-        public UploadController(IWebHostEnvironment env)
+        public UploadController(IAmazonS3 s3, IConfiguration configuration)
         {
-            _env = env;
+            _s3 = s3;
+
+            _bucket = configuration["SupabaseStorage:Bucket"]
+                ?? throw new InvalidOperationException(
+                    "Supabase Storage bucket is missing.");
+
+            _publicBaseUrl = configuration["SupabaseStorage:PublicBaseUrl"]
+                ?? throw new InvalidOperationException(
+                    "Supabase Storage public URL is missing.");
         }
 
         [HttpPost("player-image")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UploadPlayerImage(IFormFile file)
+        public async Task<IActionResult> UploadPlayerImage(IFormFile? file)
         {
-            if (file == null || file.Length == 0)
-                return BadRequest("No file uploaded.");
+            var error = ValidateImage(file);
+            if (error != null)
+                return BadRequest(error);
 
-            var allowedTypes = new[] { "image/jpeg", "image/png", "image/webp" };
-            if (!allowedTypes.Contains(file.ContentType))
-                return BadRequest("Only JPEG, PNG, or WebP images are allowed.");
-
-            if (file.Length > 5 * 1024 * 1024)
-                return BadRequest("Image must be under 5MB.");
-
-            var uploadsFolder = Path.Combine(_env.WebRootPath ?? "wwwroot", "uploads", "players");
-            Directory.CreateDirectory(uploadsFolder);
-
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-            var filePath = Path.Combine(uploadsFolder, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            var url = $"/uploads/players/{fileName}";
+            var url = await UploadAsync(file!, "players");
             return Ok(new { url });
         }
 
         [HttpPost("gallery-photo")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UploadGalleryPhoto(IFormFile file)
+        public async Task<IActionResult> UploadGalleryPhoto(IFormFile? file)
+        {
+            var error = ValidateImage(file);
+            if (error != null)
+                return BadRequest(error);
+
+            var url = await UploadAsync(file!, "gallery");
+            return Ok(new { url });
+        }
+
+        private static string? ValidateImage(IFormFile? file)
         {
             if (file == null || file.Length == 0)
-                return BadRequest("No file uploaded.");
+                return "No file uploaded.";
 
-            if (!file.ContentType.StartsWith("image/"))
-                return BadRequest("Only image files are allowed.");
+            var allowedTypes = new[]
+            {
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            };
+
+            if (!allowedTypes.Contains(file.ContentType))
+                return "Only JPEG, PNG, or WebP images are allowed.";
 
             if (file.Length > 5 * 1024 * 1024)
-                return BadRequest("Image must be under 5MB.");
+                return "Image must be under 5MB.";
 
-            var uploadsFolder = Path.Combine(_env.WebRootPath ?? "wwwroot", "uploads", "gallery");
-            Directory.CreateDirectory(uploadsFolder);
+            return null;
+        }
 
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-            var filePath = Path.Combine(uploadsFolder, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+        private async Task<string> UploadAsync(
+            IFormFile file,
+            string folder)
+        {
+            var extension = file.ContentType switch
             {
-                await file.CopyToAsync(stream);
-            }
+                "image/jpeg" => ".jpg",
+                "image/png" => ".png",
+                "image/webp" => ".webp",
+                _ => throw new InvalidOperationException(
+                    "Unsupported image type.")
+            };
 
-            return Ok(new { url = $"/uploads/gallery/{fileName}" });
+            var key = $"{folder}/{Guid.NewGuid():N}{extension}";
+
+            await using var stream = file.OpenReadStream();
+
+            var request = new PutObjectRequest
+            {
+                BucketName = _bucket,
+                Key = key,
+                InputStream = stream,
+                ContentType = file.ContentType
+            };
+
+            await _s3.PutObjectAsync(
+                request,
+                HttpContext.RequestAborted);
+
+            return $"{_publicBaseUrl.TrimEnd('/')}/{key}";
         }
     }
 }

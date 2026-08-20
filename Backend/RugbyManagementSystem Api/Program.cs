@@ -11,7 +11,7 @@ using RugbyManagementSystem.Infastructure.Repository;
 using RugbyManagementSystem_Api.Middleware;
 using System.Text;
 using System.Text.Json.Serialization;
-
+using Amazon.S3;
 
 namespace RugbyManagementSystem_Api
 {
@@ -20,6 +20,31 @@ namespace RugbyManagementSystem_Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSingleton<IAmazonS3>(_ =>
+            {
+                var endpoint = builder.Configuration["SupabaseStorage:Endpoint"]
+                    ?? throw new InvalidOperationException("Supabase Storage endpoint is missing.");
+
+                var region = builder.Configuration["SupabaseStorage:Region"]
+                    ?? throw new InvalidOperationException("Supabase Storage region is missing.");
+
+                var accessKey = builder.Configuration["SupabaseStorage:AccessKey"]
+                    ?? throw new InvalidOperationException("Supabase Storage access key is missing.");
+
+                var secretKey = builder.Configuration["SupabaseStorage:SecretKey"]
+                    ?? throw new InvalidOperationException("Supabase Storage secret key is missing.");
+
+                return new AmazonS3Client(
+                    accessKey,
+                    secretKey,
+                    new AmazonS3Config
+                    {
+                        ServiceURL = endpoint,
+                        AuthenticationRegion = region,
+                        ForcePathStyle = true
+                    });
+            });
 
             builder.Services.AddCors(options =>
             {
