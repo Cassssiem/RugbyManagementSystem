@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TEAM_LABELS } from '../types';
 import { matchPlayersApi } from '../api/matchPlayers';
 import '../styles/AdminPlayers.css';
@@ -16,8 +16,6 @@ export const AdminMatchesView = ({ matches, onNavigate, onSelectMatch, onUpdateM
 
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
-
-
 
   const startEditScore = async (match) => {
     setEditingId(match.id);
@@ -62,30 +60,6 @@ export const AdminMatchesView = ({ matches, onNavigate, onSelectMatch, onUpdateM
       setSaving(false);
     }
   };
-
-const handlePhotoUpload = async (match) => {
-  if (!photoFile) return;
-  setUploadingPhoto(true);
-  setError(null);
-  try {
-    const url = await uploadMatchPhoto(photoFile);
-    await matchPhotosApi.addPhoto(match.id, url);
-    setPhotoFile(null);
-    const fresh = await matchPhotosApi.getByMatch(match.id);
-    setMatchPhotos(fresh);
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setUploadingPhoto(false);
-  }
-};
-
-const handleDeletePhoto = async (photoId, match) => {
-  if (!window.confirm('Delete this photo?')) return;
-  await matchPhotosApi.delete(photoId);
-  const fresh = await matchPhotosApi.getByMatch(match.id);
-  setMatchPhotos(fresh);
-};
 
   const savePlayerScore = async (match) => {
     if (!selectedPlayerId) {
@@ -179,32 +153,6 @@ const handleDeletePhoto = async (photoId, match) => {
                     Save Score
                   </button>
                 </div>
-
-                <h3 className="match-edit-subtitle">Match Photos</h3>
-                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
-                      <input type="file" accept="image/*" onChange={(e) => setPhotoFile(e.target.files[0] || null)} />
-                      <button className="admin-row-btn edit" onClick={() => handlePhotoUpload(m)} disabled={uploadingPhoto || !photoFile}>
-                        {uploadingPhoto ? 'Uploading...' : 'Upload Photo'}
-                      </button>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                      {matchPhotos.map((p) => (
-                        <div key={p.id} style={{ position: 'relative' }}>
-                          <img
-                            src={`https://localhost:7056${p.imageUrl}`}
-                            alt="Match"
-                            style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 4 }}
-                          />
-                          <button
-                            onClick={() => handleDeletePhoto(p.id, m)}
-                            style={{ position: 'absolute', top: -6, right: -6, background: '#ba1a1a', color: '#fff', border: 'none', borderRadius: '50%', width: 20, height: 20, cursor: 'pointer', fontSize: '0.7rem' }}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))}
-                    </div>
 
                 <h3 className="match-edit-subtitle">Who Scored?</h3>
 
